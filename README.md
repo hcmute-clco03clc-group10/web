@@ -1,4 +1,4 @@
-# Online DynamoDB
+# Website
 
 ## Developing
 
