@@ -32,13 +32,14 @@
 			</nav>
 			<nav class="flex items-center space-x-1 text-sm font-medium text-gray-800">
 				<a
-					href="https://github.com/hcmute-clco03clc-group11"
+					href="/login"
 					class="hidden rounded bg-white px-3 py-2 transition hover:bg-gray-100 sm:inline">Login</a
 				>
 				<a
 					href="https://github.com/hcmute-clco03clc-group11"
 					class="rounded bg-blue-600 px-3 py-2 text-white transition hover:bg-blue-700">Sign Up</a
-				>
+				>	
+				
 			</nav>
 		</div>
 	</header>
