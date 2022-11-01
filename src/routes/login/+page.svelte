@@ -2,7 +2,7 @@
     <div class=" items-center px-5 py-12 lg:px-20">
         <div class="flex flex-col w-full max-w-md p-10 mx-auto my-6 transition duration-500 ease-in-out transform bg-white rounded-lg md:mt-0">
 			<div>
-				<h2 class="mt-6 text-3xl font-extrabold text-neutral-600">Sign in</h2>
+				<h2 class="mt-6 text-3xl font-extrabold text-neutral-600">Log in</h2>
 			</div>
             <div class="mt-8">
                 <div class="mt-6">
@@ -33,7 +33,7 @@
                         </div>
 
                         <div>
-                            <button type="submit" class="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign in</button>
+                            <button type="submit" class="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Log in</button>
                         </div>
                     </form>
                     <div class="relative my-4">
