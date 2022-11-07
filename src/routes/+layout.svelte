@@ -7,7 +7,6 @@
 
 	let loading = false;
 	beforeNavigate((nav) => {
-		console.log(nav);
 		if (nav.from?.routeId === nav.to?.routeId) {
 			nav.cancel();
 			return;
@@ -19,9 +18,9 @@
 	});
 </script>
 
-<div class="max-w-screen min-h-screen py-4 px-2 flex flex-col justify-start gap-y-10 bg-slate-50">
+<div class="max-w-screen min-h-screen py-4 px-6 flex flex-col justify-start gap-y-10 bg-slate-50">
 	<header>
-		<div class="mx-auto flex max-w-7xl items-center justify-between p-4">
+		<div class="mx-auto flex max-w-7xl items-center justify-between">
 			<div class="flex items-center space-x-2">
 				<a href="/">
 					<h1 class="text-xl sm:text-4xl font-bold leading-relaxed uppercase">db:online</h1>
@@ -42,7 +41,7 @@
 			</nav>
 		</div>
 	</header>
-	<main class="my-0 mx-auto min-h-1/2 lg:w-2/3 xl:w-1/2 2xl:w-2/5">
+	<main>
 		{#if loading}
 			<section
 				in:fade|local={{ delay: 100, duration: 200, easing: cubicOut }}
