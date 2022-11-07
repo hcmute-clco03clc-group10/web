@@ -41,7 +41,7 @@
 			</nav>
 		</div>
 	</header>
-	<main>
+	<main class='flex-grow'>
 		{#if loading}
 			<section
 				in:fade|local={{ delay: 100, duration: 200, easing: cubicOut }}
@@ -58,7 +58,7 @@
 			</section>
 		{/if}
 	</main>
-	<hr class="mt-auto" />
+	<hr />
 	<footer>
 		<div
 			class="mx-auto flex w-full max-w-7xl flex-col-reverse items-center justify-between space-y-6 space-y-reverse px-4 py-10 text-sm font-medium text-slate-500 md:flex-row md:items-start md:space-y-0"
