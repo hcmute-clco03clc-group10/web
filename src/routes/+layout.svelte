@@ -18,9 +18,9 @@
 	});
 </script>
 
-<div class="max-w-screen min-h-screen py-4 px-6 flex flex-col justify-start gap-y-10 bg-slate-50">
+<div class="w-screen max-w-screen min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6">
 	<header>
-		<div class="mx-auto flex max-w-7xl items-center justify-between">
+		<div class="mx-auto flex w-full xl:w-3/4 items-center justify-between">
 			<div class="flex items-center space-x-2">
 				<a href="/">
 					<h1 class="text-xl sm:text-4xl font-bold leading-relaxed uppercase">db:online</h1>
@@ -40,8 +40,9 @@
 				>
 			</nav>
 		</div>
+		<hr class="mt-4" />
 	</header>
-	<main class='flex-grow'>
+	<main class='flex-grow w-full xl:w-3/4 mx-auto'>
 		{#if loading}
 			<section
 				in:fade|local={{ delay: 100, duration: 200, easing: cubicOut }}
@@ -61,7 +62,7 @@
 	<hr />
 	<footer>
 		<div
-			class="mx-auto flex w-full max-w-7xl flex-col-reverse items-center justify-between space-y-6 space-y-reverse px-4 py-10 text-sm font-medium text-slate-500 md:flex-row md:items-start md:space-y-0"
+			class="mx-auto flex w-full xl:w-3/4 flex-col-reverse items-center justify-between space-y-6 space-y-reverse px-4 py-10 text-sm font-medium text-slate-500 md:flex-row md:items-start md:space-y-0"
 		>
 			<div class="flex items-center space-x-4">
 				<a href="/">
