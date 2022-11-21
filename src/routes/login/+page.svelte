@@ -1,10 +1,10 @@
 <section class="">
-    <div class=" items-center px-5 py-12 lg:px-20">
-        <div class="flex flex-col w-full max-w-md p-10 mx-auto my-6 transition duration-500 ease-in-out transform bg-white rounded-lg md:mt-0">
+    <div class=" items-center px-5 ml-20">
+        <div class="flex flex-col w-full max-w-md p-10 mx-auto transition duration-500 ease-in-out transform bg-white rounded-lg md:mt-0">
 			<div>
-				<h2 class="mt-6 text-3xl font-extrabold text-neutral-600">Log in</h2>
+				<h2 class="text-3xl font-extrabold text-neutral-600">Log in</h2>
 			</div>
-            <div class="mt-8">
+            <div class="mt-4">
                 <div class="mt-6">
                     <form action="#" method="POST" class="space-y-6">
                         <div>
