@@ -1,5 +1,5 @@
 <section class="">
-    <div class=" items-center px-5 ml-20">
+    <div class=" items-center px-5 ml-24">
         <div class="flex flex-col w-full max-w-md p-10 mx-auto transition duration-500 ease-in-out transform bg-white rounded-lg md:mt-0">
 			<div>
 				<h2 class="text-3xl font-extrabold text-neutral-600">Log in</h2>
