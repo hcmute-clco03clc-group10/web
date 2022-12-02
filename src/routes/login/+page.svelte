@@ -9,6 +9,7 @@
 	let password = '';
 	let email = '';
 	let submitting = false;
+	let result: { ok: boolean; text: string } | undefined = undefined;
 
 	async function submit(this: HTMLFormElement, ev: SubmitEvent) {
 		ev.preventDefault();
@@ -16,7 +17,7 @@
 			return;
 		}
 		submitting = true;
-		const result = await fetch(endpoint('/login'), {
+		const response = await fetch(endpoint('/login'), {
 			method: 'post',
 			body: JSON.stringify({
 				username: email,
@@ -26,6 +27,10 @@
 		}).finally(() => {
 			submitting = false;
 		});
+		result = {
+			ok: response.status === 200,
+			text: await response.text()
+		};
 	}
 </script>
 
@@ -68,7 +73,9 @@
 							/>
 						</div>
 
-						<div class="flex items-center justify-between">
+						<div
+							class="flex flex-col gap-y-2 gap-x-2 items-start justify-between sm:flex-row sm:items-center"
+						>
 							<div class="flex items-center">
 								<Input
 									type="checkbox"
@@ -89,8 +96,10 @@
 							</div>
 						</div>
 
-						<div>
-							<SymbolButton solid type="submit" symbol="trending_flat">
+						<div
+							class="flex flex-col flex-wrap gap-y-2 gap-x-2 items-start justify-between sm:flex-row sm:items-center"
+						>
+						<SymbolButton solid bind:hover={submitting} type="submit" symbol="trending_flat">
 								<div slot="symbol">
 									{#if submitting}
 										<div in:fade={{ duration: 150, easing: quadInOut }}>
@@ -105,6 +114,11 @@
 								</div>
 								<span slot="text"> Login </span>
 							</SymbolButton>
+							{#if result}
+								<p class={`break-all ${result.ok ? 'text-green-600' : 'text-red-600'}`}>
+									{result.text}
+								</p>
+							{/if}
 						</div>
 					</form>
 				</div>
