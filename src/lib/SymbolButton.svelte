@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let solid = false;
+	export let hover = false;
 </script>
 
 <button
@@ -9,11 +10,11 @@
 		($$restProps.class || '')}
 >
 	<span
-		class="absolute right-0 translate-x-full flex items-center transition-transform group-hover:-translate-x-4"
+	 class="absolute right-0 translate-x-full flex items-center transition-transform {hover ? '-translate-x-4' : 'group-hover:-translate-x-4'}"
 	>
 		<slot name="symbol" />
 	</span>
-	<span class="text-sm font-medium transition-all group-hover:mr-4">
+	<span class="text-sm font-medium transition-all {hover ? 'mr-4' : 'group-hover:mr-4'}">
 		<slot name="text" />
 	</span>
 </button>
