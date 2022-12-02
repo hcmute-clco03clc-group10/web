@@ -1,6 +1,32 @@
-<script>
+<script lang="ts">
+	import { endpoint } from '$lib/api';
 	import Input from '$lib/Input.svelte';
 	import SymbolButton from '$lib/SymbolButton.svelte';
+	import Spinner from '$lib/Spinner.svelte';
+	import { fade } from 'svelte/transition';
+	import { quadInOut } from 'svelte/easing';
+
+	let password = '';
+	let email = '';
+	let submitting = false;
+
+	async function submit(this: HTMLFormElement, ev: SubmitEvent) {
+		ev.preventDefault();
+		if (submitting) {
+			return;
+		}
+		submitting = true;
+		const result = await fetch(endpoint('/login'), {
+			method: 'post',
+			body: JSON.stringify({
+				username: email,
+				password
+			}),
+			credentials: 'include'
+		}).finally(() => {
+			submitting = false;
+		});
+	}
 </script>
 
 <section class="">
@@ -13,15 +39,16 @@
 			</div>
 			<div class="mt-4">
 				<div class="mt-6">
-					<form action="#" method="POST" class="flex flex-col gap-y-8">
+					<form action="#" method="POST" class="flex flex-col gap-y-8" on:submit={submit}>
 						<div class="flex flex-col gap-y-2">
-							<label for="email" class="block text-sm font-medium text-slate-600">
+							<label for="username" class="block text-sm font-medium text-slate-600">
 								Email address
 							</label>
 							<Input
-								id="email"
-								name="email"
-								type="email"
+								bind:value={email}
+								id="username"
+								name="username"
+								type="text"
 								spellcheck="false"
 								placeholder="Your Email"
 							/>
@@ -32,6 +59,7 @@
 								Password
 							</label>
 							<Input
+								bind:value={password}
 								id="password"
 								name="password"
 								type="password"
@@ -62,7 +90,21 @@
 						</div>
 
 						<div>
-							<SymbolButton solid type="submit" symbol="trending_flat">Login</SymbolButton>
+							<SymbolButton solid type="submit" symbol="trending_flat">
+								<div slot="symbol">
+									{#if submitting}
+										<div in:fade={{ duration: 150, easing: quadInOut }}>
+											<Spinner class="h-5 w-5" />
+										</div>
+									{:else}
+										<span
+											in:fade={{ duration: 150, easing: quadInOut }}
+											class="material-symbols-rounded align-middle">trending_flat</span
+										>
+									{/if}
+								</div>
+								<span slot="text"> Login </span>
+							</SymbolButton>
 						</div>
 					</form>
 				</div>
@@ -70,4 +112,3 @@
 		</div>
 	</div>
 </section>
-
