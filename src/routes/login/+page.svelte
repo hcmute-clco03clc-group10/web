@@ -9,11 +9,11 @@
 			class="flex flex-col w-full max-w-md p-10 mx-auto transition duration-500 ease-in-out transform bg-slate-50 border rounded-lg md:mt-0"
 		>
 			<div>
-				<h2 class="text-3xl font-extrabold text-slate-600">Log in</h2>
+				<h2 class="text-3xl font-extrabold text-slate-600">Log in.</h2>
 			</div>
 			<div class="mt-4">
 				<div class="mt-6">
-					<form action="#" method="POST" class="space-y-6">
+					<form action="#" method="POST" class="flex flex-col gap-y-8">
 						<div class="flex flex-col gap-y-2">
 							<label for="email" class="block text-sm font-medium text-slate-600">
 								Email address
@@ -61,9 +61,9 @@
 							</div>
 						</div>
 
-						<SymbolButton solid type="submit" symbol="trending_flat">
-							Login
-						</SymbolButton>
+						<div>
+							<SymbolButton solid type="submit" symbol="trending_flat">Login</SymbolButton>
+						</div>
 					</form>
 				</div>
 			</div>
