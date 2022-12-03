@@ -1,5 +1,5 @@
 <article class="prose prose-slate prose-lg">
-	<h2>Điện toán đám mây - lớp 03CLC - nhóm 11</h2>
+	<h2>Điện toán đám mây - lớp 03CLC - nhóm 10</h2>
 	<h3>Tên đề tài</h3>
 	<p>
 		Xây dựng ứng dụng trên AWS cho phép tạo database và cung cấp API để thêm, xóa, sửa trên

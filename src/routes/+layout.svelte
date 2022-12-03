@@ -87,7 +87,7 @@
 				class="flex flex-col flex-wrap items-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
 			>
 				<a href="/about" class="hover:text-slate-900">About</a>
-				<a href="https://github.com/hcmute-clco03clc-group11" class="hover:text-slate-900">GitHub</a
+				<a href="https://github.com/hcmute-clco03clc-group10" class="hover:text-slate-900">GitHub</a
 				>
 			</nav>
 		</div>
