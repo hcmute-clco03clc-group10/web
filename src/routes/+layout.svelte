@@ -16,7 +16,7 @@
 			setTimeout(() => {
 				resolve();
 				promise = undefined;
-			}, 300)
+			}, 350)
 		);
 		loading = true;
 	});
