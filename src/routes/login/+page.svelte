@@ -31,7 +31,7 @@
 		const response = await fetch(endpoint('/login'), {
 			method: 'post',
 			body: JSON.stringify({
-				username: email,
+				email,
 				password
 			})
 		}).finally(() => {
@@ -73,13 +73,13 @@
 			<div class="mt-6">
 				<form action="#" method="POST" class="flex flex-col gap-y-8" on:submit={submit}>
 					<div class="flex flex-col gap-y-2">
-						<label for="username" class="block text-sm font-medium text-slate-600">
+						<label for="email" class="block text-sm font-medium text-slate-600">
 							Email address
 						</label>
 						<Input
 							bind:value={email}
-							id="username"
-							name="username"
+							id="email"
+							name="email"
 							type="email"
 							spellcheck="false"
 							placeholder="Your Email"
