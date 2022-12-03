@@ -6,19 +6,24 @@
 	import '../app.css';
 
 	let loading = false;
+	let promise: Promise<void> | undefined;
 	beforeNavigate((nav) => {
-		if (nav.from?.routeId === nav.to?.routeId) {
+		if (nav.from?.routeId === nav.to?.routeId || promise) {
 			nav.cancel();
 			return;
 		}
+		promise = new Promise(resolve => setTimeout(() => { resolve(); promise = undefined; }, 300));
 		loading = true;
 	});
-	afterNavigate(() => {
+	afterNavigate(async () => {
+		await promise;
 		loading = false;
 	});
 </script>
 
-<div class="w-screen max-w-screen min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6">
+<div
+	class="w-screen max-w-screen min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6"
+>
 	<header>
 		<div class="mx-auto flex w-full xl:w-3/4 items-center justify-between">
 			<div class="flex items-center space-x-2">
@@ -27,22 +32,25 @@
 				</a>
 			</div>
 			<nav class="hidden items-center space-x-2 text-sm font-medium text-gray-800 md:flex">
-				<a href="/about" class="rounded bg-slate-50 px-3 py-2 transition hover:bg-gray-100">About</a>
+				<a href="/about" class="rounded bg-slate-50 px-3 py-2 transition hover:bg-gray-100">About</a
+				>
 			</nav>
 			<nav class="flex items-center space-x-1 text-sm font-medium text-gray-800">
 				<a
-					href="https://github.com/hcmute-clco03clc-group11"
-					class="hidden rounded bg-slate-50 px-3 py-2 transition hover:bg-gray-100 sm:inline">Login</a
+					href="/login"
+					class="hidden rounded bg-slate-50 px-3 py-2 transition hover:bg-gray-100 sm:inline"
+					>Login</a
 				>
 				<a
 					href="https://github.com/hcmute-clco03clc-group11"
-					class="rounded bg-blue-600 px-3 py-2 text-slate-50 transition hover:bg-blue-700">Sign Up</a
+					class="rounded bg-blue-600 px-3 py-2 text-slate-50 transition hover:bg-blue-700"
+					>Sign Up</a
 				>
 			</nav>
 		</div>
 		<hr class="mt-4" />
 	</header>
-	<main class='flex-grow w-full xl:w-3/4 mx-auto'>
+	<main class="flex-grow w-full xl:w-3/4 mx-auto">
 		{#if loading}
 			<section
 				in:fade|local={{ delay: 100, duration: 200, easing: cubicOut }}
