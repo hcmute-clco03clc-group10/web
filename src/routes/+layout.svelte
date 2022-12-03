@@ -12,7 +12,12 @@
 			nav.cancel();
 			return;
 		}
-		promise = new Promise(resolve => setTimeout(() => { resolve(); promise = undefined; }, 300));
+		promise = new Promise((resolve) =>
+			setTimeout(() => {
+				resolve();
+				promise = undefined;
+			}, 300)
+		);
 		loading = true;
 	});
 	afterNavigate(async () => {
@@ -42,7 +47,7 @@
 					>Login</a
 				>
 				<a
-					href="https://github.com/hcmute-clco03clc-group11"
+					href="/signup"
 					class="rounded bg-blue-600 px-3 py-2 text-slate-50 transition hover:bg-blue-700"
 					>Sign Up</a
 				>
