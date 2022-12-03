@@ -5,15 +5,26 @@
 	import Spinner from '$lib/Spinner.svelte';
 	import { fade } from 'svelte/transition';
 	import { quadInOut } from 'svelte/easing';
+	import Link from '$lib/Link.svelte';
+
+	interface FormResult {
+		ok: boolean;
+		text: string;
+	}
 
 	let password = '';
 	let email = '';
 	let submitting = false;
-	let result: { ok: boolean; text: string } | undefined = undefined;
+	let result: FormResult | undefined = undefined;
 
 	async function submit(this: HTMLFormElement, ev: SubmitEvent) {
 		ev.preventDefault();
 		if (submitting) {
+			return;
+		}
+		const r = validate();
+		if (r) {
+			result = r;
 			return;
 		}
 		submitting = true;
@@ -30,6 +41,24 @@
 			ok: response.status === 200,
 			text: await response.text()
 		};
+	}
+
+	function validate(): FormResult | undefined {
+		const emailRgx =
+			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (!emailRgx.test(email)) {
+			return {
+				ok: false,
+				text: 'Please enter a valid email.'
+			};
+		}
+		password = password.trim();
+		if (!password.length) {
+			return {
+				ok: false,
+				text: 'Please enter a password.'
+			};
+		}
 	}
 </script>
 
@@ -51,9 +80,11 @@
 							bind:value={email}
 							id="username"
 							name="username"
-							type="text"
+							type="email"
 							spellcheck="false"
 							placeholder="Your Email"
+							required
+							autofocus
 						/>
 					</div>
 
@@ -68,6 +99,7 @@
 							type="password"
 							autocomplete="current-password"
 							placeholder="Your Password"
+							required
 						/>
 					</div>
 
@@ -86,9 +118,9 @@
 						</div>
 
 						<div class="text-sm">
-							<a href="/" class="font-medium text-blue-600 hover:text-blue-500">
+							<Link href="#">
 								Forgot your password?
-							</a>
+							</Link>
 						</div>
 					</div>
 
