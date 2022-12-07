@@ -1,32 +1,13 @@
 <script lang="ts">
-	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import Skeleton from '$lib/Skeleton.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import '../app.css';
 	import type { PageData } from './$types';
 	import Header from '$lib/Header.svelte';
+	import { navigating } from '$app/stores';
 
 	export let data: PageData;
-	let loading = false;
-	let promise: Promise<void> | undefined;
-	beforeNavigate((nav) => {
-		if (nav.from?.routeId === nav.to?.routeId || promise) {
-			nav.cancel();
-			return;
-		}
-		promise = new Promise((resolve) =>
-			setTimeout(() => {
-				resolve();
-				promise = undefined;
-			}, 350)
-		);
-		loading = true;
-	});
-	afterNavigate(async () => {
-		await promise;
-		loading = false;
-	});
 </script>
 
 <div
@@ -36,7 +17,7 @@
 		<Header bind:loggedIn={data.loggedIn} />
 	</div>
 	<main class="flex-grow">
-		{#if loading}
+		{#if $navigating}
 			<section
 				in:fade|local={{ delay: 100, duration: 200, easing: cubicOut }}
 				out:fly|local={{ y: 10, duration: 100, easing: cubicIn }}
