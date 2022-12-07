@@ -1,7 +1,17 @@
 <script lang="ts">
+	import { endpoint } from '$lib/api';
+	import { sineInOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
+	import Spinner from './Spinner.svelte';
+
 	import SymbolLink from './SymbolLink.svelte';
 
-	export let loggedIn: boolean;
+	export const isLoggedIn = async () => {
+		const { status } = await fetch(endpoint('/token'), { method: 'get', credentials: 'include' });
+		return status === 200;
+	};
+
+	const loggedInPromise = isLoggedIn();
 </script>
 
 <div class="relative">
@@ -220,27 +230,35 @@
 				</div>
 			</nav>
 			<div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-				{#if loggedIn}
-					<SymbolLink href="/logout">
-						<span
-							slot="text"
-							class="whitespace-nowrap font-medium text-slate-500 group-hover:text-slate-900"
-							>Logout</span
-						>
-						<span slot="symbol" class="material-symbols-rounded">trending_flat</span>
-					</SymbolLink>
-				{:else}
-					<a
-						href="/login"
-						class="whitespace-nowrap text-base font-medium text-slate-500 hover:text-slate-900"
-						>Log in</a
-					>
-					<a
-						href="/signup"
-						class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
-						>Sign up</a
-					>
-				{/if}
+				{#await loggedInPromise}
+					<Spinner class="text-slate-300" />
+				{:then loggedIn}
+					{#if loggedIn}
+						<div in:fade={{ duration: 100, easing: sineInOut }}>
+							<SymbolLink href="/logout">
+								<span
+									slot="text"
+									class="whitespace-nowrap font-medium text-slate-500 group-hover:text-slate-900"
+									>Logout</span
+								>
+								<span slot="symbol" class="material-symbols-rounded">trending_flat</span>
+							</SymbolLink>
+						</div>
+					{:else}
+						<div in:fade={{ duration: 100, easing: sineInOut }}>
+							<a
+								href="/login"
+								class="whitespace-nowrap text-base font-medium text-slate-500 hover:text-slate-900"
+								>Log in</a
+							>
+							<a
+								href="/signup"
+								class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+								>Sign up</a
+							>
+						</div>
+					{/if}
+				{/await}
 			</div>
 		</div>
 	</div>
@@ -303,26 +321,31 @@
 					<a href="/" class="text-base font-medium text-slate-900 hover:text-slate-700">Security</a>
 				</div>
 				<div>
-					{#if loggedIn}
-						<SymbolLink href="/logout" class="w-fit bg-blue-600 border border-blue-700 py-1 px-4">
-							<span slot="text" class="whitespace-nowrap font-medium text-slate-50">Sign out</span>
-							<span
-								slot="symbol"
-								class="material-symbols-rounded text-slate-50 transition group-hover:-translate-x-2"
-								>trending_flat</span
+					{#await loggedInPromise}
+						<Spinner class="text-slate-300" />
+					{:then loggedIn}
+						{#if loggedIn}
+							<SymbolLink href="/logout" class="w-fit bg-blue-600 border border-blue-700 py-1 px-4">
+								<span slot="text" class="whitespace-nowrap font-medium text-slate-50">Sign out</span
+								>
+								<span
+									slot="symbol"
+									class="material-symbols-rounded text-slate-50 transition group-hover:-translate-x-2"
+									>trending_flat</span
+								>
+							</SymbolLink>
+						{:else}
+							<a
+								href="/signup"
+								class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+								>Sign up</a
 							>
-						</SymbolLink>
-					{:else}
-						<a
-							href="/signup"
-							class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
-							>Sign up</a
-						>
-						<p class="mt-6 text-center text-base font-medium text-slate-500">
-							Existing customer?
-							<a href="/login" class="text-blue-600 hover:text-blue-500">Log in</a>
-						</p>
-					{/if}
+							<p class="mt-6 text-center text-base font-medium text-slate-500">
+								Existing customer?
+								<a href="/login" class="text-blue-600 hover:text-blue-500">Log in</a>
+							</p>
+						{/if}
+					{/await}
 				</div>
 			</div>
 		</div>
