@@ -30,6 +30,7 @@
 		submitting = true;
 		const response = await fetch(endpoint('/login'), {
 			method: 'post',
+			credentials: 'include',
 			body: JSON.stringify({
 				email,
 				password
