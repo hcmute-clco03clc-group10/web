@@ -132,7 +132,7 @@
 							<div slot="symbol">
 								{#if submitting}
 									<div in:fade={{ duration: 150, easing: quadInOut }}>
-										<Spinner class="h-5 w-5" />
+										<Spinner class="h-5 w-5 text-slate-50" />
 									</div>
 								{:else}
 									<span
