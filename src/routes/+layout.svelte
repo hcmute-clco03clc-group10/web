@@ -4,7 +4,10 @@
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import '../app.css';
+	import type { PageData } from './$types';
+	import Header from '$lib/Header.svelte';
 
+	export let data: PageData;
 	let loading = false;
 	let promise: Promise<void> | undefined;
 	beforeNavigate((nav) => {
@@ -27,35 +30,12 @@
 </script>
 
 <div
-	class="w-screen max-w-screen min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6"
+	class="w-screen max-w-7xl mx-auto min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6 md:px-10"
 >
-	<header>
-		<div class="mx-auto flex w-full xl:w-3/4 items-center justify-between">
-			<div class="flex items-center space-x-2">
-				<a href="/">
-					<h1 class="text-xl sm:text-4xl font-bold leading-relaxed uppercase">db:online</h1>
-				</a>
-			</div>
-			<nav class="hidden items-center space-x-2 text-sm font-medium text-gray-800 md:flex">
-				<a href="/about" class="rounded bg-slate-50 px-3 py-2 transition hover:bg-gray-100">About</a
-				>
-			</nav>
-			<nav class="flex items-center space-x-1 text-sm font-medium text-gray-800">
-				<a
-					href="/login"
-					class="hidden rounded bg-slate-50 px-3 py-2 transition hover:bg-gray-100 sm:inline"
-					>Login</a
-				>
-				<a
-					href="/signup"
-					class="rounded bg-blue-600 px-3 py-2 text-slate-50 transition hover:bg-blue-700"
-					>Sign Up</a
-				>
-			</nav>
-		</div>
-		<hr class="mt-4" />
-	</header>
-	<main class="flex-grow w-full xl:w-3/4 mx-auto">
+	<div class="">
+		<Header bind:loggedIn={data.loggedIn} />
+	</div>
+	<main class="flex-grow">
 		{#if loading}
 			<section
 				in:fade|local={{ delay: 100, duration: 200, easing: cubicOut }}
