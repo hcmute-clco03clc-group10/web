@@ -57,12 +57,7 @@
 		<div
 			class="mx-auto flex w-full xl:w-3/4 flex-col-reverse items-center justify-between space-y-6 space-y-reverse px-4 py-10 text-sm font-medium text-slate-500 md:flex-row md:items-start md:space-y-0"
 		>
-			<div class="flex items-center space-x-4">
-				<a href="/">
-					<h1 class="text-xl sm:text-xl font-bold leading-relaxed uppercase">db:online</h1>
-				</a>
-				<p>DB:ONLINE © 2022.</p>
-			</div>
+			<p>Cloudbase © 2022.</p>
 			<nav
 				class="flex flex-col flex-wrap items-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
 			>
