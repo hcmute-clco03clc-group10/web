@@ -1,33 +1,49 @@
 <script lang="ts">
+	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import Skeleton from '$lib/Skeleton.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import '../app.css';
 	import type { PageData } from './$types';
 	import Header from '$lib/Header.svelte';
-	import { navigating } from '$app/stores';
 
-	export let data: PageData;
+	let navigating = false;
+	let promise: Promise<void> | undefined;
+	beforeNavigate((nav) => {
+		if (nav.from?.routeId === nav.to?.routeId || promise) {
+			nav.cancel();
+			return;
+		}
+		promise = new Promise((resolve) =>
+			setTimeout(() => {
+				resolve();
+				promise = undefined;
+			}, 350)
+		);
+		navigating = true;
+	});
+	afterNavigate(async () => {
+		await promise;
+		navigating = false;
+	});
 </script>
 
 <div
 	class="w-screen max-w-7xl mx-auto min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6 md:px-10"
 >
-	<div class="">
-		<Header bind:loggedIn={data.loggedIn} />
-	</div>
+	<Header />
 	<main class="flex-grow">
-		{#if $navigating}
+		{#if navigating}
 			<section
-				in:fade|local={{ delay: 100, duration: 200, easing: cubicOut }}
-				out:fly|local={{ y: 10, duration: 100, easing: cubicIn }}
+				in:fade={{ delay: 100, duration: 200, easing: cubicOut }}
+				out:fly={{ y: 10, duration: 100, easing: cubicIn }}
 			>
 				<Skeleton />
 			</section>
 		{:else}
 			<section
-				in:fly|local={{ y: -10, delay: 100, duration: 200, easing: cubicOut }}
-				out:fade|local={{ duration: 100, easing: cubicIn }}
+				in:fly={{ y: -10, delay: 100, duration: 200, easing: cubicOut }}
+				out:fade={{ duration: 100, easing: cubicIn }}
 			>
 				<slot />
 			</section>
