@@ -75,9 +75,9 @@
 	}
 </script>
 
-<section class="items-center px-5 ml-24">
+<section class="items-center mx-auto max-w-md p-10 border rounded-lg">
 	<div
-		class="flex flex-col w-full max-w-md p-10 mx-auto transition duration-500 ease-in-out transform bg-slate-50 border rounded-lg md:mt-0"
+		class="flex flex-col w-full transition duration-500 ease-in-out transform bg-slate-50 md:mt-0"
 	>
 		<div>
 			<h2 class="text-3xl font-extrabold text-slate-600">Sign up.</h2>
