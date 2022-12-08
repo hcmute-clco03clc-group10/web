@@ -4,3 +4,8 @@ declare interface ISideBarItem {
 	active?: boolean;
 	children?: ISideBarItem[];
 }
+
+declare interface IUser {
+	id: string;
+	email: string;
+}
