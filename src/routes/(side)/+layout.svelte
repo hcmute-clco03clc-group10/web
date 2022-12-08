@@ -3,9 +3,6 @@
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import SideBar from '$lib/SideBar.svelte';
-	import { fade, fly } from 'svelte/transition';
-	import { cubicIn, cubicOut } from 'svelte/easing';
-	import Skeleton from '$lib/Skeleton.svelte';
 
 	let navigating = false;
 	let promise: Promise<void> | undefined;
@@ -43,6 +40,6 @@
 </script>
 
 <section class="flex justify-start items-start hidden md:flex">
-	<SideBar {items} email="todo@gmail.com" logged={$page.data.logged} />
+	<SideBar {items} userRef={$page.data.userRef} />
 	<slot />
 </section>
