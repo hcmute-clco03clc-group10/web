@@ -2,8 +2,9 @@
 	import { sineInOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import Spinner from './Spinner.svelte';
-
 	import SymbolLink from './SymbolLink.svelte';
+	import ThreeDotsLoader from './ThreeDotsLoader.svelte';
+
 	export let logging: WeakRef<Promise<boolean>>;
 </script>
 
@@ -222,17 +223,19 @@
 					</div>
 				</div>
 			</nav>
-			<div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+			<div class="relative hidden items-center justify-end md:flex md:flex-1 lg:w-0">
 				{#await logging.deref()}
-					<Spinner class="text-slate-300" />
+					<div transition:fade={{ duration: 150, easing: sineInOut }} class="absolute t-0 l-0">
+						<ThreeDotsLoader class="w-2.5 h-2.5 bg-stone-400" />
+					</div>
 				{:then logged}
 					{#if logged}
 						<div in:fade={{ duration: 100, easing: sineInOut }}>
-							<SymbolLink href="/logout">
+							<SymbolLink href="/signout">
 								<span
 									slot="text"
 									class="whitespace-nowrap font-medium text-slate-500 group-hover:text-slate-900"
-									>Logout</span
+									>Sign out</span
 								>
 								<span slot="symbol" class="material-symbols-rounded">trending_flat</span>
 							</SymbolLink>
