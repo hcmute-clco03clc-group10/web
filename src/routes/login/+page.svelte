@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import { quadInOut } from 'svelte/easing';
 	import Link from '$lib/Link.svelte';
+	import { goto, invalidate } from '$app/navigation';
 
 	interface FormResult {
 		ok: boolean;
@@ -38,10 +39,14 @@
 		}).finally(() => {
 			submitting = false;
 		});
+		const ok = response.status === 200;
 		result = {
-			ok: response.status === 200,
+			ok,
 			text: await response.text()
 		};
+		if (ok) {
+			invalidate((url) => url.pathname.endsWith('token')).then((_) => goto('/'));
+		}
 	}
 
 	function validate(): FormResult | undefined {
@@ -119,9 +124,7 @@
 						</div>
 
 						<div class="text-sm">
-							<Link href="#">
-								Forgot your password?
-							</Link>
+							<Link href="#">Forgot your password?</Link>
 						</div>
 					</div>
 

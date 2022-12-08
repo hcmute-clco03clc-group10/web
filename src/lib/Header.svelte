@@ -1,17 +1,10 @@
 <script lang="ts">
-	import { endpoint } from '$lib/api';
 	import { sineInOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import Spinner from './Spinner.svelte';
 
 	import SymbolLink from './SymbolLink.svelte';
-
-	export const isLoggedIn = async () => {
-		const { status } = await fetch(endpoint('/token'), { method: 'get', credentials: 'include' });
-		return status === 200;
-	};
-
-	const loggedInPromise = isLoggedIn();
+	export let logging: WeakRef<Promise<boolean>>;
 </script>
 
 <div class="relative">
@@ -230,10 +223,10 @@
 				</div>
 			</nav>
 			<div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-				{#await loggedInPromise}
+				{#await logging.deref()}
 					<Spinner class="text-slate-300" />
-				{:then loggedIn}
-					{#if loggedIn}
+				{:then logged}
+					{#if logged}
 						<div in:fade={{ duration: 100, easing: sineInOut }}>
 							<SymbolLink href="/logout">
 								<span
@@ -321,10 +314,10 @@
 					<a href="/" class="text-base font-medium text-slate-900 hover:text-slate-700">Security</a>
 				</div>
 				<div>
-					{#await loggedInPromise}
+					{#await logging.deref()}
 						<Spinner class="text-slate-300" />
-					{:then loggedIn}
-						{#if loggedIn}
+					{:then logged}
+						{#if logged}
 							<SymbolLink href="/logout" class="w-fit bg-blue-600 border border-blue-700 py-1 px-4">
 								<span slot="text" class="whitespace-nowrap font-medium text-slate-50">Sign out</span
 								>

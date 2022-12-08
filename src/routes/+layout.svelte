@@ -4,13 +4,14 @@
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import '../app.css';
-	import type { PageData } from './$types';
 	import Header from '$lib/Header.svelte';
+	import type { PageData } from './$types';
 
+	export let data: PageData;
 	let navigating = false;
 	let promise: Promise<void> | undefined;
 	beforeNavigate((nav) => {
-		if (nav.from?.routeId === nav.to?.routeId || promise) {
+		if (promise) {
 			nav.cancel();
 			return;
 		}
@@ -25,13 +26,14 @@
 	afterNavigate(async () => {
 		await promise;
 		navigating = false;
+		promise = undefined;
 	});
 </script>
 
 <div
 	class="w-screen max-w-7xl mx-auto min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6 md:px-10"
 >
-	<Header />
+	<Header bind:logging={data.logging} />
 	<main class="flex-grow">
 		{#if navigating}
 			<section
