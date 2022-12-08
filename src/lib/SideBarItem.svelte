@@ -3,11 +3,11 @@
 </script>
 
 {#if item.children}
-	<details class="group flex flex-col gap-y-1.5">
+	<details class="group flex flex-col gap-y-2">
 		<summary
 			class={item.active
-				? 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 bg-blue-100 border border-blue-200 text-slate-800'
-				: 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 text-slate-700 hover:bg-blue-100'}
+				? 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 bg-blue-100 border border-blue-200 text-slate-800 transition-colors focus:ring focus:ring-blue-600/60'
+				: 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 text-slate-700 hover:bg-blue-100  focus:ring focus:ring-blue-600/60'}
 		>
 			{#if item.symbol}
 				<span class="material-symbols-rounded"> {item.symbol} </span>
@@ -29,7 +29,7 @@
 				</svg>
 			</span>
 		</summary>
-		<nav class="ml-8 flex flex-col gap-y-1 mt-1">
+		<nav class="ml-5 flex flex-col gap-y-2 mt-2">
 			{#each item.children as child (child)}
 				<svelte:self item={child} />
 			{/each}
@@ -39,8 +39,8 @@
 	<button
 		type="button"
 		class={item.active
-			? 'flex items-center gap-x-3 rounded-lg px-4 py-2 bg-blue-100 border border-blue-200 text-slate-800'
-			: 'flex items-center gap-x-3 rounded-lg px-4 py-2 text-slate-700 hover:bg-blue-100'}
+			? 'flex items-center gap-x-3 rounded-lg px-4 py-2 bg-blue-100 border border-blue-200 text-slate-800  focus:ring focus:ring-blue-600/60'
+			: 'flex items-center gap-x-3 rounded-lg px-4 py-2 text-slate-700 hover:bg-blue-100  focus:ring focus:ring-blue-600/60'}
 	>
 		{#if item.symbol}
 			<span class="material-symbols-rounded"> {item.symbol} </span>

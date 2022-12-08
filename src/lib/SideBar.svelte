@@ -18,7 +18,7 @@
 			<h2 class="font-bold text-xl text-blue-600">Cloudbase</h2>
 		</a>
 
-		<nav aria-label="Main Nav" class="mt-6 flex flex-col gap-y-1">
+		<nav aria-label="Main Nav" class="mt-6 flex flex-col gap-y-2">
 			{#each items as item (item)}
 				<SideBarItem {item} />
 			{/each}
