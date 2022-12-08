@@ -13,7 +13,11 @@
 		<div class="flex items-center justify-between border-b-2 py-6 md:justify-start md:space-x-10">
 			<div class="flex justify-start lg:w-0 lg:flex-1">
 				<a href="/" class="flex flex-row gap-x-2 items-center">
-					<img class="h-8 w-auto sm:h-12 object-fill" src="cloudbase.png" alt="Cloudbase logo." />
+					<img
+						class="h-8 w-auto sm:h-12 object-fill"
+						src="/images/cloudbase.png"
+						alt="Cloudbase logo."
+					/>
 					<h2 class="font-bold text-2xl text-blue-600">Cloudbase</h2>
 				</a>
 			</div>
@@ -276,7 +280,7 @@
 			<div class="px-5 py-4">
 				<div class="flex items-center justify-between">
 					<div>
-						<img class="h-8 w-auto" src="cloudbase.png" alt="Cloudbase logo." />
+						<img class="h-8 w-auto" src="/images/cloudbase.png" alt="Cloudbase logo." />
 					</div>
 					<div class="-mr-2">
 						<button
