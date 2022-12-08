@@ -3,7 +3,7 @@
 	import Skeleton from '$lib/Skeleton.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
-	import '../app.css';
+	import '../../app.css';
 	import Header from '$lib/Header.svelte';
 	import type { PageData } from './$types';
 

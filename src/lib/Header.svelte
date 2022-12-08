@@ -226,7 +226,7 @@
 			<div class="relative hidden items-center justify-end md:flex md:flex-1 lg:w-0">
 				{#await logging.deref()}
 					<div transition:fade={{ duration: 150, easing: sineInOut }} class="absolute t-0 l-0">
-						<ThreeDotsLoader class="w-2.5 h-2.5 bg-stone-400" />
+						<ThreeDotsLoader class="w-2.5 h-2.5 bg-slate-400" />
 					</div>
 				{:then logged}
 					{#if logged}
@@ -276,7 +276,7 @@
 			<div class="px-5 py-4">
 				<div class="flex items-center justify-between">
 					<div>
-						<img class="h-8 w-auto" src="cloudbase.png" alt="Your Company" />
+						<img class="h-8 w-auto" src="cloudbase.png" alt="Cloudbase logo." />
 					</div>
 					<div class="-mr-2">
 						<button
@@ -321,7 +321,10 @@
 						<Spinner class="text-slate-300" />
 					{:then logged}
 						{#if logged}
-							<SymbolLink href="/logout" class="w-fit bg-blue-600 border border-blue-700 py-1 px-4">
+							<SymbolLink
+								href="/signout"
+								class="w-fit bg-blue-600 border border-blue-700 py-1 px-4"
+							>
 								<span slot="text" class="whitespace-nowrap font-medium text-slate-50">Sign out</span
 								>
 								<span

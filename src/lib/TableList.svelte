@@ -22,7 +22,7 @@
 		<h2 class="text-2xl font-semibold">{header}</h2>
 		<button
 			type="button"
-			class="material-symbols-outlined align-middle rounded-full transition-color duration-200
+			class="material-symbols-rounded align-middle rounded-full transition-color duration-200
 		hover:text-blue-600 hover:ring-1 hover:-ring-offset-2 hover:ring-blue-600"
 		>
 			add_circle
@@ -41,7 +41,7 @@
 				>
 					<li>
 						<span
-							class="material-symbols-outlined align-middle text-slate-600 duration-100 transition-color
+							class="material-symbols-rounded align-middle text-slate-600 duration-100 transition-color
 							group-hover:text-slate-900"
 						>
 							table_view

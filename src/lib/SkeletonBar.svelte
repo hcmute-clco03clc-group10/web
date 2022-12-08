@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let from = 'from-transparent';
-	export let via = 'via-stone-200';
+	export let via = 'via-slate-200';
 	export let to = 'to-transparent';
 </script>
 
