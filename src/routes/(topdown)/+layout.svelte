@@ -31,7 +31,7 @@
 </script>
 
 <div
-	class="w-screen max-w-7xl mx-auto min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6 md:px-10"
+	class="w-full max-w-7xl mx-auto min-h-screen flex flex-col justify-start gap-y-10 bg-slate-50 py-4 px-6 md:px-10"
 >
 	<Header bind:logging={data.logging} />
 	<main class="flex-grow">
