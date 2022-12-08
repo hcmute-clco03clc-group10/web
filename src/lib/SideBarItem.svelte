@@ -35,6 +35,18 @@
 			{/each}
 		</nav>
 	</details>
+{:else if item.href}
+	<a
+		href={item.href}
+		class={item.active
+			? 'flex items-center gap-x-3 rounded-lg px-4 py-2 bg-blue-100 border border-blue-200 text-slate-800  focus:ring focus:ring-blue-600/60'
+			: 'flex items-center gap-x-3 rounded-lg px-4 py-2 text-slate-700 hover:bg-blue-100  focus:ring focus:ring-blue-600/60'}
+	>
+		{#if item.symbol}
+			<span class="material-symbols-rounded"> {item.symbol} </span>
+		{/if}
+		<span class="font-medium"> {item.text} </span>
+	</a>
 {:else}
 	<button
 		type="button"

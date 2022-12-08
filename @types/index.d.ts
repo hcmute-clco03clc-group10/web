@@ -1,6 +1,7 @@
 declare interface ISideBarItem {
 	text: string;
 	symbol?: string;
+	href?: string;
 	active?: boolean;
 	children?: ISideBarItem[];
 }
