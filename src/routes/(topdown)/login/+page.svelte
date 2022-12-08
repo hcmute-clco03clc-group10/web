@@ -6,7 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import { quadInOut } from 'svelte/easing';
 	import Link from '$lib/Link.svelte';
-	import { goto, invalidate } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	interface FormResult {
 		ok: boolean;
@@ -45,7 +45,7 @@
 			text: await response.text()
 		};
 		if (ok) {
-			invalidate((url) => url.pathname.endsWith('token')).then((_) => goto('/'));
+			goto('/dashboard');
 		}
 	}
 
