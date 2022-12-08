@@ -39,7 +39,7 @@
 	];
 </script>
 
-<section class="flex justify-start items-start hidden md:flex">
-	<SideBar {items} userRef={$page.data.userRef} />
+<section class="flex justify-start items-start">
+	<SideBar {items} user={$page.data.userRef.deref()} />
 	<slot />
 </section>
