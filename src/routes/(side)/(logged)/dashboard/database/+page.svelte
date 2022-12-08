@@ -3,6 +3,6 @@
 </script>
 
 <svelte:head>
-	<title>Dashboard • Database</title>
+	<title>Cloudbase • Dashboard • Database</title>
 </svelte:head>
 List of tables

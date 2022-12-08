@@ -1,3 +1,7 @@
+<svelte:head>
+	<title>Cloudbase • About</title>
+</svelte:head>
+
 <article class="prose prose-slate prose-lg">
 	<h2>Điện toán đám mây - lớp 03CLC - nhóm 10</h2>
 	<h3>Tên đề tài</h3>

@@ -4,7 +4,7 @@
 	import SymbolLink from './SymbolLink.svelte';
 
 	export let items: ISideBarItem[];
-	export let userRef: WeakRef<Promise<IUser>>;
+	export let user: Promise<IUser>;
 </script>
 
 <div class="flex min-h-screen flex-col justify-between border-r bg-slate-50">
@@ -28,7 +28,7 @@
 	<div
 		class="sticky text-sm inset-x-0 bottom-0 border-t border-slate-200 flex flex-col items-start p-4 gap-y-2 bg-slate-50"
 	>
-		{#await userRef.deref()}
+		{#await user}
 			<SkeletonBar class="w-full h-4" />
 		{:then user}
 			<p>{user.email}</p>
