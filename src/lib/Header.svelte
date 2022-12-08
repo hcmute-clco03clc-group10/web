@@ -236,12 +236,12 @@
 					{#if logged}
 						<div in:fade={{ duration: 100, easing: sineInOut }}>
 							<SymbolLink href="/signout">
+								<span slot="symbol" class="material-symbols-rounded">trending_flat</span>
 								<span
 									slot="text"
-									class="whitespace-nowrap font-medium text-slate-500 group-hover:text-slate-900"
+									class="whitespace-nowrap font-medium text-slate-500 group-hover:text-slate-900 group-hover:mr-3"
 									>Sign out</span
 								>
-								<span slot="symbol" class="material-symbols-rounded">trending_flat</span>
 							</SymbolLink>
 						</div>
 					{:else}
@@ -329,12 +329,10 @@
 								href="/signout"
 								class="w-fit bg-blue-600 border border-blue-700 py-1 px-4"
 							>
-								<span slot="text" class="whitespace-nowrap font-medium text-slate-50">Sign out</span
-								>
-								<span
-									slot="symbol"
-									class="material-symbols-rounded text-slate-50 transition group-hover:-translate-x-2"
+								<span slot="symbol" class="material-symbols-rounded text-slate-50"
 									>trending_flat</span
+								>
+								<span slot="text" class="whitespace-nowrap font-medium text-slate-50">Sign out</span
 								>
 							</SymbolLink>
 						{:else}
