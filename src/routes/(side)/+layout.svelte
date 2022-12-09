@@ -33,12 +33,7 @@
 			text: 'Database',
 			symbol: 'storage',
 			active: true,
-			children: [
-				{
-					text: '1',
-					symbol: 'storage'
-				}
-			]
+			href: '/dashboard/database'
 		},
 		{ text: 'User', symbol: 'person', href: '/dashboard/user' }
 	];
