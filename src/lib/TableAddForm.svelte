@@ -5,6 +5,7 @@
 	import { quadInOut } from 'svelte/easing';
 	import Spinner from './Spinner.svelte';
 	import type { AddForm } from 'src/routes/(side)/(logged)/dashboard/database/store';
+	import { api } from './api';
 
 	interface Result {
 		ok: boolean;
@@ -13,13 +14,27 @@
 
 	export let form: AddForm;
 	let submitting = false;
-	let result: any;
+	let result: Result;
 
-	const submit = (ev: Event) => {
+	async function submit(this: HTMLFormElement, ev: Event) {
 		ev.preventDefault();
 		submitting = true;
-	};
-	$: console.log(form);
+		const response = await api
+			.use(fetch)
+			.put('/table', {
+				body: JSON.stringify(form),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			.finally(() => {
+				submitting = false;
+			});
+		result = {
+			ok: response.status === 201,
+			text: await response.text()
+		};
+	}
 </script>
 
 <form action="#" method="post" on:submit={submit}>
