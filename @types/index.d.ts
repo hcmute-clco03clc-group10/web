@@ -10,3 +10,8 @@ declare interface IUser {
 	id: string;
 	email: string;
 }
+
+declare interface ITable {
+	name: string;
+}
+
