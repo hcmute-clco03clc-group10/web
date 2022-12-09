@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DatabasePage from './database/+page.svelte';
+	import { goto } from '$app/navigation';
+	goto('/dashboard/database', { replaceState: true });
 </script>
 
-<DatabasePage />
