@@ -154,7 +154,7 @@
 		</li>
 		<li class="flex flex-col gap-y-2">
 			<label for="provisionedReadCapacity" class="block text-sm font-medium text-slate-600">
-				Provisioned read capacity
+				Read capacity units
 			</label>
 			<Input
 				bind:value={form.provisionedReadCapacity}
@@ -169,7 +169,7 @@
 		</li>
 		<li class="flex flex-col gap-y-2">
 			<label for="provisionedWriteCapacity" class="block text-sm font-medium text-slate-600">
-				Provisioned write capacity
+				Write capacity units
 			</label>
 			<Input
 				bind:value={form.provisionedWriteCapacity}
