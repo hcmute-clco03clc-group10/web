@@ -38,8 +38,8 @@
 </script>
 
 <form action="#" method="post" on:submit={submit}>
-	<ul class="flex flex-col gap-y-8">
-		<li class="flex flex-col gap-y-2">
+	<ul class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+		<li class="flex flex-col gap-y-2 lg:col-span-2">
 			<label for="tableName" class="block text-sm font-medium text-slate-600"> Table name </label>
 			<Input
 				bind:value={form.tableName}
@@ -66,9 +66,6 @@
 				placeholder="Enter partition key..."
 				required
 			/>
-		</li>
-
-		<li>
 			<fieldset class="flex flex-col items-start sm:flex-row sm:items-center gap-y-4 gap-x-6 pt-2">
 				<legend class="text-slate-600 font-medium text-sm">Partition key type</legend>
 				<div class="flex items-center gap-x-2">
@@ -106,6 +103,7 @@
 				</div>
 			</fieldset>
 		</li>
+
 		<li class="flex flex-col gap-y-2">
 			<label for="sortKey" class="block text-sm font-medium text-slate-600"> Sort key </label>
 			<Input
@@ -117,8 +115,6 @@
 				placeholder="Enter sort key..."
 				required
 			/>
-		</li>
-		<li>
 			<fieldset class="flex flex-col items-start sm:flex-row sm:items-center gap-y-4 gap-x-6 pt-2">
 				<legend class="text-slate-600 font-medium text-sm">Sort key type</legend>
 				<div class="flex items-center gap-x-2">
@@ -187,7 +183,7 @@
 			/>
 		</li>
 		<li
-			class="flex flex-col flex-wrap gap-y-2 gap-x-2 items-start justify-between sm:flex-row sm:items-center"
+			class="lg:col-span-2 font-medium flex flex-col flex-wrap gap-y-2 gap-x-4 items-start justify-start sm:flex-row sm:items-center"
 		>
 			<SymbolButton solid bind:hover={submitting} type="submit" symbol="trending_flat">
 				<div slot="symbol">
