@@ -196,7 +196,7 @@
 							<div class="bg-slate-50 px-5 py-5 sm:px-8 sm:py-8">
 								<div>
 									<h3 class="text-base font-medium text-slate-500">Recent Posts</h3>
-									<ul role="list" class="mt-4 space-y-4">
+									<ul class="mt-4 space-y-4">
 										<li class="truncate text-base">
 											<a href="/" class="font-medium text-slate-900 hover:text-slate-700"
 												>Boost your conversion rate</a
