@@ -12,6 +12,18 @@ declare interface IUser {
 }
 
 declare interface ITable {
-	name: string;
+	TableName: string;
+	TableStatus: string;
+	TableArn: string;
+	TableId: string;
+	ProvisionedThroughput: {
+		NumberOfDecreasesToday: number;
+		ReadCapacityUnits: number;
+		WriteCapacityUnits: number;
+	};
+	CreationDateTime: string;
+	KeySchema: { AttributeName: string; KeyType: string }[];
+	ItemCount: number;
+	TableSizeBytes: string;
+	AttributeDefinitions: { AttributeName: string; AttributeType: string }[];
 }
-
