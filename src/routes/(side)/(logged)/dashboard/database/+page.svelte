@@ -11,7 +11,6 @@
 
 	export let data: PageData;
 	let disabledRefresh = false;
-	let disabledAdd = false;
 
 	const refresh = () => {
 		disabledRefresh = true;
@@ -30,13 +29,9 @@
 	};
 
 	const add = () => {
-		disabledAdd = true;
 		store.update((v) => {
 			v.page = 'add';
 			return v;
-		});
-		invalidate((url) => url.pathname.endsWith('/table')).then(() => {
-			disabledAdd = false;
 		});
 	};
 </script>
@@ -62,7 +57,7 @@
 		<li>
 			<Button
 				type="buttin"
-				disabled={disabledAdd || $store.page === 'add'}
+				disabled={$store.page === 'add'}
 				on:click={add}
 				noPadding
 				class="px-1 py-1"
