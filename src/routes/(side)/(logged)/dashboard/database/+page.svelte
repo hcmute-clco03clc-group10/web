@@ -3,9 +3,13 @@
 
 	import Button from '$lib/Button.svelte';
 	import SkeletonBar from '$lib/SkeletonBar.svelte';
+	import Spinner from '$lib/Spinner.svelte';
 	import TableAddForm from '$lib/TableAddForm.svelte';
 
 	import TableList from '$lib/TableList.svelte';
+	import ThreeDotsLoader from '$lib/ThreeDotsLoader.svelte';
+	import { quadIn, quadInOut, quadOut, sineInOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
 	import { store } from './store';
 
@@ -14,14 +18,11 @@
 
 	const refresh = () => {
 		disabledRefresh = true;
-		invalidate((url) => url.pathname.endsWith('/table')).then(() => {
-			Promise.allSettled([
-				new Promise((resolve) => setTimeout(resolve, 5000)),
-				data.tablesRef.deref()!
-			]).finally(() => {
+		invalidate((url) => url.pathname.endsWith('/table'))
+			.then(() => data.tablesRef.deref()!)
+			.finally(() => {
 				disabledRefresh = false;
 			});
-		});
 		store.update((v) => {
 			v.page = 'list';
 			return v;
@@ -70,17 +71,26 @@
 <section class="mt-4">
 	{#if $store.page === 'list'}
 		{#await data.tablesRef.deref()}
-			<div class="flex flex-col gap-y-4">
-				<SkeletonBar class="w-full h-10" />
-				<SkeletonBar class="w-full h-10" />
-				<SkeletonBar class="w-full h-10" />
-				<SkeletonBar class="w-full h-10" />
-				<SkeletonBar class="w-full h-10" />
+			<div
+				in:fade={{ delay: 100, duration: 100, easing: sineInOut }}
+				out:fade={{ duration: 100, easing: sineInOut }}
+			>
+				<ThreeDotsLoader class="w-3 h-3 bg-slate-300" />
 			</div>
 		{:then tables}
-			<TableList items={tables} />
+			<div
+				in:fade={{ delay: 100, duration: 100, easing: sineInOut }}
+				out:fade={{ duration: 100, easing: sineInOut }}
+			>
+				<TableList items={tables} />
+			</div>
 		{/await}
 	{:else if $store.page === 'add'}
-		<TableAddForm form={$store.addForm} />
+		<div
+			in:fade={{ delay: 100, duration: 300, easing: sineInOut }}
+			out:fade={{ duration: 100, easing: sineInOut }}
+		>
+			<TableAddForm form={$store.addForm} />
+		</div>
 	{/if}
 </section>
