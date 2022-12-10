@@ -5,13 +5,11 @@
 	import SideBar from '$lib/SideBar.svelte';
 	import SkeletonBar from '$lib/SkeletonBar.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import Skeleton from '$lib/Skeleton.svelte';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 
 	let navigating = false;
 	let promise: Promise<void> | undefined;
 	beforeNavigate((nav) => {
-		console.log(nav);
 		if (promise) {
 			nav.cancel();
 			return;
@@ -24,23 +22,34 @@
 		);
 		navigating = true;
 	});
-	afterNavigate(async (nav) => {
+	afterNavigate(async () => {
 		await promise;
 		navigating = false;
 	});
-	const items: ISideBarItem[] = [
+	let items: ISideBarItem[] = [
 		{
 			text: 'Database',
 			symbol: 'storage',
-			active: true,
 			href: '/dashboard/database'
 		},
 		{ text: 'User', symbol: 'person', href: '/dashboard/user' }
 	];
+	afterNavigate((nav) => {
+		const to = nav.to;
+		if (!to) {
+			return;
+		}
+		for (const item of items) {
+			item.active = to.url.pathname === item.href;
+		}
+		items = items;
+	});
 </script>
 
 <section class="flex justify-start items-start">
-	<SideBar {items} user={$page.data.userRef.deref()} />
+	{#if $page.data.userRef}
+		<SideBar {items} user={$page.data.userRef.deref()} />
+	{/if}
 	<main class="relative p-6 w-full min-h-screen">
 		{#await promise}
 			<div
