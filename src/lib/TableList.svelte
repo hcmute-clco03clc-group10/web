@@ -142,7 +142,7 @@
 						</span>
 					</td>
 					<td class="whitespace-nowrap px-4 py-2">
-						<Link href="/dashboard/database/{item.TableId}">
+						<Link href="/dashboard/table/{item.TableName}">
 							<span> {item.TableName} </span>
 						</Link>
 					</td>
