@@ -76,7 +76,7 @@
 					<label class="sr-only" for="SelectAll">Select All</label>
 					<Input
 						type="checkbox"
-						class="h-5 w-5 checked:text-blue-600"
+						class="px-0 py-0 lg:px-5 lg:py-3 checked:text-blue-600"
 						on:input={toggleSelectAll}
 						checked={selecteds.length && selecteds.every((selected) => selected)}
 					/>
@@ -87,8 +87,16 @@
 					Partition Key
 				</th>
 				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900"> Sort Key </th>
-				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900"> Items </th>
-				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900"> Size </th>
+				<th
+					class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900 hidden lg:table-cell"
+				>
+					Items
+				</th>
+				<th
+					class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900 hidden lg:table-cell"
+				>
+					Size
+				</th>
 			</tr>
 		</thead>
 
@@ -104,7 +112,7 @@
 						<CheckboxInput
 							bind:checked={selecteds[i]}
 							type="checkbox"
-							class="h-5 w-5 checked:text-blue-600"
+							class="px-0 py-0 lg:px-5 lg:py-3 checked:text-blue-600"
 						/>
 					</td>
 					<td class="whitespace-nowrap px-4 py-2">
@@ -123,7 +131,7 @@
 					<td class="whitespace-nowrap px-4 py-2 text-slate-700">
 						{item.KeySchema[0].AttributeName}
 						<span
-							class="text-xs font-medium px-1.5 py-1 rounded-lg bg-slate-300 text-slate-700 border border-slate-400 ml-2"
+							class="text-xs font-medium px-1.5 py-1 rounded-lg bg-slate-300 text-slate-700 border border-slate-400 ml-2 hidden lg:inline"
 						>
 							{getAttributeTypeSymbol(
 								item.AttributeDefinitions.find(
@@ -137,7 +145,7 @@
 							{item.KeySchema[1].AttributeName}
 						{/if}
 						<span
-							class="text-xs font-medium px-1.5 py-1 rounded-lg bg-slate-300 text-slate-700 border border-slate-400 ml-2"
+							class="text-xs font-medium px-1.5 py-1 rounded-lg bg-slate-300 text-slate-700 border border-slate-400 ml-2 hidden lg:inline"
 						>
 							{getAttributeTypeSymbol(
 								item.AttributeDefinitions.find(
@@ -146,8 +154,12 @@
 							)}
 						</span>
 					</td>
-					<td class="whitespace-nowrap px-4 py-2 text-slate-700"> {item.ItemCount} </td>
-					<td class="whitespace-nowrap px-4 py-2 text-slate-700"> {item.TableSizeBytes} bytes </td>
+					<td class="whitespace-nowrap px-4 py-2 text-slate-700 hidden lg:table-cell">
+						{item.ItemCount}
+					</td>
+					<td class="whitespace-nowrap px-4 py-2 text-slate-700 hidden lg:table-cell">
+						{item.TableSizeBytes} bytes
+					</td>
 				</tr>
 			{/each}
 		</tbody>
