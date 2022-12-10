@@ -6,6 +6,7 @@
 	import SkeletonBar from '$lib/SkeletonBar.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
+	import { TEMPORARY_REDIRECT } from 'http-status';
 
 	let navigating = false;
 	let promise: Promise<void> | undefined;
@@ -29,19 +30,29 @@
 	let items: ISideBarItem[] = [
 		{
 			text: 'Database',
-			symbol: 'storage',
-			href: '/dashboard/database'
+			symbol: 'dns',
+			children: [{ text: 'Tables', symbol: 'view_list', href: '/dashboard/table' }]
 		},
-		{ text: 'User', symbol: 'person', href: '/dashboard/user' }
+		{ text: 'User', symbol: 'account_circle', href: '/dashboard/user' }
 	];
+	const recursivelySetActive = (
+		pathname: string,
+		items?: ISideBarItem[]
+	): ISideBarItem | undefined => {
+		if (!items) {
+			return;
+		}
+		for (const item of items) {
+			recursivelySetActive(pathname, item.children);
+			item.active = item.href === pathname;
+		}
+	};
 	afterNavigate((nav) => {
 		const to = nav.to;
 		if (!to) {
 			return;
 		}
-		for (const item of items) {
-			item.active = to.url.pathname === item.href;
-		}
+		recursivelySetActive(to.url.pathname, items);
 		items = items;
 	});
 </script>
