@@ -12,7 +12,7 @@
 			{#if item.symbol}
 				<span class="material-symbols-rounded"> {item.symbol} </span>
 			{/if}
-			<span class="font-medium"> {item.text} </span>
+			<span class="font-medium hidden lg:inline"> {item.text} </span>
 
 			<span class="ml-auto shrink-0 transition duration-300 group-open:-rotate-180">
 				<svg
