@@ -4,7 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { quadInOut } from 'svelte/easing';
 	import Spinner from './Spinner.svelte';
-	import type { AddForm } from 'src/routes/(side)/(logged)/dashboard/database/store';
+	import type { AddForm } from 'src/routes/(side)/(logged)/dashboard/table/store';
 	import { api } from './api';
 
 	interface Result {
