@@ -1,14 +1,10 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
-
 	import Button from '$lib/Button.svelte';
-	import SkeletonBar from '$lib/SkeletonBar.svelte';
-	import Spinner from '$lib/Spinner.svelte';
 	import TableAddForm from '$lib/TableAddForm.svelte';
-
 	import TableList from '$lib/TableList.svelte';
 	import ThreeDotsLoader from '$lib/ThreeDotsLoader.svelte';
-	import { quadIn, quadInOut, quadOut, sineInOut } from 'svelte/easing';
+	import { sineInOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
 	import { store } from './store';
