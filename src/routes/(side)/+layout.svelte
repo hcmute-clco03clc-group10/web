@@ -35,26 +35,6 @@
 		},
 		{ text: 'User', symbol: 'account_circle', href: '/dashboard/user' }
 	];
-	const recursivelySetActive = (
-		pathname: string,
-		items?: ISideBarItem[]
-	): ISideBarItem | undefined => {
-		if (!items) {
-			return;
-		}
-		for (const item of items) {
-			recursivelySetActive(pathname, item.children);
-			item.active = item.href === pathname;
-		}
-	};
-	afterNavigate((nav) => {
-		const to = nav.to;
-		if (!to) {
-			return;
-		}
-		recursivelySetActive(to.url.pathname, items);
-		items = items;
-	});
 </script>
 
 <section class="flex justify-start items-start">

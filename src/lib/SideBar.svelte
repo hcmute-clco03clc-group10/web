@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { afterNavigate } from '$app/navigation';
 	import Link from './Link.svelte';
 	import SideBarItem from './SideBarItem.svelte';
 	import SkeletonBar from './SkeletonBar.svelte';
@@ -6,6 +7,37 @@
 
 	export let items: ISideBarItem[];
 	export let user: Promise<IUser>;
+	let activeRef: WeakRef<ISideBarItem> | undefined;
+	const recursivelyFindActive = (
+		pathname: string,
+		items?: ISideBarItem[]
+	): ISideBarItem | undefined => {
+		if (!items) {
+			return undefined;
+		}
+		for (const item of items) {
+			const active = recursivelyFindActive(pathname, item.children);
+			if (active) {
+				return active;
+			}
+			if (item.href === pathname) {
+				return item;
+			}
+		}
+		return undefined;
+	};
+	afterNavigate((nav) => {
+		const to = nav.to;
+		if (!to) {
+			return;
+		}
+		const active = recursivelyFindActive(to.url.pathname, items);
+		if (active) {
+			activeRef = new WeakRef(active);
+		} else {
+			activeRef = undefined;
+		}
+	});
 </script>
 
 <div class="flex min-h-screen flex-col justify-between border-r bg-slate-50">
@@ -21,7 +53,7 @@
 
 		<nav aria-label="Main Nav" class="mt-6 flex flex-col gap-y-2">
 			{#each items as item (item)}
-				<SideBarItem {item} />
+				<SideBarItem {activeRef} {item} />
 			{/each}
 		</nav>
 	</div>

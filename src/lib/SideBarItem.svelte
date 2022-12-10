@@ -1,11 +1,36 @@
 <script lang="ts">
 	export let item: ISideBarItem;
+	export let activeRef: WeakRef<ISideBarItem> | undefined;
+	let active = false;
+	let open = false;
+	$: active = activeRef?.deref() === item;
+
+	const shouldOpen = (item?: ISideBarItem) => {
+		if (!item?.children) {
+			return false;
+		}
+		for (const child of item.children) {
+			if (child === activeRef!.deref()) {
+				return true;
+			}
+			const should = shouldOpen(child);
+			if (should) {
+				return true;
+			}
+		}
+		return false;
+	};
+	$: if (activeRef) {
+		if (!open) {
+			open = shouldOpen(item);
+		}
+	}
 </script>
 
 {#if item.children}
-	<details class="group flex flex-col gap-y-2">
+	<details class="group flex flex-col gap-y-2" {open}>
 		<summary
-			class={item.active
+			class={active
 				? 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 bg-blue-100 border border-blue-200 text-slate-800 transition-colors focus:ring focus:ring-blue-600/60'
 				: 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 border border-transparent text-slate-700 hover:bg-blue-100  focus:ring focus:ring-blue-600/60'}
 		>
@@ -31,14 +56,14 @@
 		</summary>
 		<nav class="ml-5 flex flex-col gap-y-2 mt-2">
 			{#each item.children as child (child)}
-				<svelte:self item={child} />
+				<svelte:self item={child} {activeRef} />
 			{/each}
 		</nav>
 	</details>
 {:else if item.href}
 	<a
 		href={item.href}
-		class={item.active
+		class={active
 			? 'flex items-center gap-x-3 rounded-lg px-4 py-2 transition bg-blue-100 border border-blue-200 text-slate-800 focus:ring focus:ring-blue-600/60'
 			: 'flex items-center gap-x-3 rounded-lg transition transform px-4 py-2 text-slate-700 border border-transparent hover:bg-blue-100 focus:ring focus:ring-blue-600/60'}
 	>
@@ -50,7 +75,7 @@
 {:else}
 	<button
 		type="button"
-		class={item.active
+		class={active
 			? 'flex items-center gap-x-3 rounded-lg px-4 py-2 bg-blue-100 border border-blue-200 text-slate-800  focus:ring focus:ring-blue-600/60'
 			: 'flex items-center gap-x-3 rounded-lg px-4 py-2 text-slate-700 hover:bg-blue-100 focus:ring focus:ring-blue-600/60'}
 	>
