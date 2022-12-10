@@ -56,10 +56,10 @@
 				return '0101';
 			}
 			case 'N': {
-				return '1234';
+				return '123';
 			}
 			case 'S': {
-				return 'abcd';
+				return 'abc';
 			}
 		}
 	};
@@ -76,24 +76,33 @@
 					<label class="sr-only" for="SelectAll">Select All</label>
 					<Input
 						type="checkbox"
-						class="px-0 py-0 lg:px-5 lg:py-3 checked:text-blue-600"
+						class="px-0 py-0 lg:px-3 lg:py-2 xl:px-5 xl:py-3 checked:text-blue-600"
 						on:input={toggleSelectAll}
 						checked={selecteds.length && selecteds.every((selected) => selected)}
 					/>
 				</th>
+				<th
+					class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900 hidden lg:table-cell"
+				>
+					Creation Date
+				</th>
 				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900"> Name </th>
 				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900"> Status </th>
 				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900">
-					Partition Key
+					<span class="md:hidden">PK</span>
+					<span class="hidden md:inline"> Partition Key </span>
 				</th>
-				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900"> Sort Key </th>
+				<th class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900">
+					<span class="md:hidden">SK</span>
+					<span class="hidden md:inline"> Sort Key </span>
+				</th>
 				<th
 					class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900 hidden lg:table-cell"
 				>
 					Items
 				</th>
 				<th
-					class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900 hidden lg:table-cell"
+					class="whitespace-nowrap px-4 py-2 text-left font-medium text-slate-900 hidden xl:table-cell"
 				>
 					Size
 				</th>
@@ -112,8 +121,25 @@
 						<CheckboxInput
 							bind:checked={selecteds[i]}
 							type="checkbox"
-							class="px-0 py-0 lg:px-5 lg:py-3 checked:text-blue-600"
+							class="px-0 py-0 lg:px-3 lg:py-2 xl:px-5 xl:py-3 checked:text-blue-600"
 						/>
+					</td>
+					<td class="whitespace-nowrap px-4 py-2 hidden lg:table-cell">
+						<span class="hidden xl:inline">
+							{new Date(item.CreationDateTime).toLocaleDateString('en-US', {
+								weekday: 'short',
+								year: 'numeric',
+								month: 'short',
+								day: 'numeric'
+							})}
+						</span>
+						<span class="hidden lg:inline xl:hidden">
+							{new Date(item.CreationDateTime).toLocaleDateString('en-US', {
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric'
+							})}
+						</span>
 					</td>
 					<td class="whitespace-nowrap px-4 py-2">
 						<Link href="/dashboard/database/{item.TableId}">
@@ -126,7 +152,7 @@
 						<span class="material-symbols-rounded align-middle text-base font-bold">
 							{getStatusSymbol(item.TableStatus)}
 						</span>
-						{item.TableStatus}
+						<span class="hidden md:inline"> {item.TableStatus} </span>
 					</td>
 					<td class="whitespace-nowrap px-4 py-2 text-slate-700">
 						{item.KeySchema[0].AttributeName}
@@ -157,7 +183,7 @@
 					<td class="whitespace-nowrap px-4 py-2 text-slate-700 hidden lg:table-cell">
 						{item.ItemCount}
 					</td>
-					<td class="whitespace-nowrap px-4 py-2 text-slate-700 hidden lg:table-cell">
+					<td class="whitespace-nowrap px-4 py-2 text-slate-700 hidden xl:table-cell">
 						{item.TableSizeBytes} bytes
 					</td>
 				</tr>

@@ -45,7 +45,7 @@
 		{#if item.symbol}
 			<span class="material-symbols-rounded"> {item.symbol} </span>
 		{/if}
-		<span class="font-medium"> {item.text} </span>
+		<span class="font-medium hidden lg:inline"> {item.text} </span>
 	</a>
 {:else}
 	<button
@@ -57,6 +57,6 @@
 		{#if item.symbol}
 			<span class="material-symbols-rounded"> {item.symbol} </span>
 		{/if}
-		<span class="font-medium"> {item.text} </span>
+		<span class="font-medium hidden lg:inline"> {item.text} </span>
 	</button>
 {/if}
