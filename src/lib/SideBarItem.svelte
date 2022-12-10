@@ -1,4 +1,6 @@
 <script lang="ts">
+	import 'animate.css';
+	import { onMount, tick } from 'svelte';
 	export let item: ISideBarItem;
 	export let activeRef: WeakRef<ISideBarItem> | undefined;
 	let active = false;
@@ -20,19 +22,18 @@
 		}
 		return false;
 	};
-	$: if (activeRef) {
-		if (!open) {
-			open = shouldOpen(item);
-		}
-	}
+	onMount(async () => {
+		await tick();
+		open = shouldOpen(item);
+	});
 </script>
 
 {#if item.children}
-	<details class="group flex flex-col gap-y-2" {open}>
+	<details class="group flex flex-col gap-y-2 select-none" bind:open>
 		<summary
-			class={active
-				? 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 bg-blue-100 border border-blue-200 text-slate-800 transition-colors focus:ring focus:ring-blue-600/60'
-				: 'flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 border border-transparent text-slate-700 hover:bg-blue-100  focus:ring focus:ring-blue-600/60'}
+			class="flex cursor-pointer items-center rounded-lg px-4 py-2 gap-x-3 border transition-colors focus:ring focus:ring-blue-600/60 {active
+				? 'bg-blue-100  border-blue-200 text-slate-800'
+				: 'border-transparent text-slate-700 hover:bg-blue-100'}"
 		>
 			{#if item.symbol}
 				<span class="material-symbols-rounded"> {item.symbol} </span>
@@ -54,7 +55,12 @@
 				</svg>
 			</span>
 		</summary>
-		<nav class="ml-5 flex flex-col gap-y-2 mt-2">
+		<nav
+			class="ml-5 flex flex-col gap-y-2 mt-2 {open
+				? 'opacity-100'
+				: 'opacity-0'} animate__animated animate__faster"
+			class:animate__flipInX={open}
+		>
 			{#each item.children as child (child)}
 				<svelte:self item={child} {activeRef} />
 			{/each}
@@ -63,9 +69,10 @@
 {:else if item.href}
 	<a
 		href={item.href}
-		class={active
-			? 'flex items-center gap-x-3 rounded-lg px-4 py-2 transition bg-blue-100 border border-blue-200 text-slate-800 focus:ring focus:ring-blue-600/60'
-			: 'flex items-center gap-x-3 rounded-lg transition transform px-4 py-2 text-slate-700 border border-transparent hover:bg-blue-100 focus:ring focus:ring-blue-600/60'}
+		class={'flex select-none items-center gap-x-3 rounded-lg px-4 py-2 transition transform border focus:ring focus:ring-blue-600/60 ' +
+			(active
+				? 'bg-blue-100 border-blue-200 text-slate-800'
+				: 'hover:bg-blue-100 text-slate-700 border-transparent')}
 	>
 		{#if item.symbol}
 			<span class="material-symbols-rounded"> {item.symbol} </span>
