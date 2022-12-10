@@ -175,7 +175,7 @@
 						>
 							{getAttributeTypeSymbol(
 								item.AttributeDefinitions.find(
-									(v) => v.AttributeName === item.KeySchema[0].AttributeName
+									(v) => v.AttributeName === item.KeySchema[1].AttributeName
 								).AttributeType
 							)}
 						</span>
