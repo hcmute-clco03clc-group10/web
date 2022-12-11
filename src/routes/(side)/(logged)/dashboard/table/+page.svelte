@@ -55,6 +55,7 @@
 <section class="mt-4">
 	{#if hash === '#create-table'}
 		<div
+			class="border rounded-lg p-2 bg-white"
 			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
 			out:fade={{ duration: 100, easing: sineInOut }}
 		>
