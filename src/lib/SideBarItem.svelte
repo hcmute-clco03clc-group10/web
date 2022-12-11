@@ -1,6 +1,6 @@
 <script lang="ts">
 	import 'animate.css';
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	export let item: ISideBarItem;
 	export let activeRef: WeakRef<ISideBarItem> | undefined;
 	let active = false;
@@ -22,9 +22,16 @@
 		}
 		return false;
 	};
-	onMount(async () => {
-		await tick();
-		open = shouldOpen(item);
+	onMount(() => {
+		if (item.children) {
+			const interval = setInterval(() => {
+				if (!activeRef) {
+					return;
+				}
+				clearInterval(interval);
+				open = shouldOpen(item);
+			}, 10);
+		}
 	});
 </script>
 
