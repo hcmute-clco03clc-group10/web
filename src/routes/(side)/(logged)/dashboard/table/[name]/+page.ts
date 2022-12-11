@@ -1,12 +1,12 @@
 import { api } from '$lib/api';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async (ev) => {
+export const load: PageLoad = async ({ fetch, params }) => {
 	return {
 		tableRef: new WeakRef(
 			api
-				.use(ev.fetch)
-				.get(`/table/${ev.params.name}`)
+				.use(fetch)
+				.get(`/table?name=${params.name}`)
 				.then((v) => {
 					if (v.status === 200) {
 						return v.json();
@@ -16,8 +16,8 @@ export const load: PageLoad = async (ev) => {
 		),
 		tableItemsRef: new WeakRef(
 			api
-				.use(ev.fetch)
-				.get(`/table/item/${ev.params.name}`)
+				.use(fetch)
+				.get(`/table/items/${params.name}`)
 				.then((v) => {
 					if (v.status === 200) {
 						return v.json();
