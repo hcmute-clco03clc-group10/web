@@ -37,7 +37,7 @@
 	];
 </script>
 
-<section class="flex justify-start items-start">
+<section class="flex justify-start items-stretch">
 	{#if $page.data.userRef}
 		<SideBar {items} user={$page.data.userRef.deref()} />
 	{/if}
