@@ -6,6 +6,7 @@
 	import TableAddForm from '$lib/TableAddForm.svelte';
 	import TableList from '$lib/TableList.svelte';
 	import ThreeDotsLoader from '$lib/ThreeDotsLoader.svelte';
+	import { tick } from 'svelte';
 	import { sineInOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
@@ -16,12 +17,20 @@
 	let disabledDelete = false;
 	let hash: string;
 	let selecteds: boolean[] = [];
-	$: hash = $page.url.hash;
+	$: {
+		const newHash = $page.url.hash;
+		if (hash === '#create-table' && newHash === '#list') {
+			setTimeout(() => {
+				refresh();
+			}, 100);
+		}
+		hash = newHash;
+	}
 	$: disabledDelete = !selecteds.some((selected) => selected);
 
 	const refresh = () => {
 		disabledRefresh = true;
-		invalidate((url) => url.pathname.endsWith('/table'))
+		invalidate('/dashboard/table#list')
 			.then(() => data.tablesRef.deref()!)
 			.finally(() => {
 				disabledRefresh = false;
@@ -33,16 +42,14 @@
 	<title>Cloudbase • Dashboard • Database</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold">Database</h1>
+<h1 class="text-2xl font-bold">Table</h1>
 <nav class="mt-2">
 	<ul class="flex flex-row gap-x-4">
 		<li>
-			<Link href="#list" type="button" disabled={hash === '#list'}>List of tables</Link>
+			<Link href="#list" type="button" active={hash === '#list'}>List of tables</Link>
 		</li>
 		<li>
-			<Link href="#create-table" type="button" disabled={hash === '#create-table'}>
-				Create table
-			</Link>
+			<Link href="#create-table" type="button" active={hash === '#create-table'}>Create table</Link>
 		</li>
 	</ul>
 </nav>
@@ -58,7 +65,7 @@
 		<div
 			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
 			out:fade={{ duration: 100, easing: sineInOut }}
-			class="flex flex-col gap-y-2 justify-start"
+			class="flex flex-col gap-y-2 justify-start border rounded-lg p-2 bg-white"
 		>
 			<nav>
 				<ul class="flex gap-x-2 p-1 border rounded-lg w-fit drop-shadow-sm">
