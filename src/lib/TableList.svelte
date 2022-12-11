@@ -4,7 +4,7 @@
 	import Link from './Link.svelte';
 
 	export let items: ITable[] = [];
-	let selecteds: boolean[] = [];
+	export let selecteds: boolean[] = [];
 
 	const getStatusColor = (status: string) => {
 		switch (status) {
