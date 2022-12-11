@@ -5,6 +5,10 @@
 
 	export let items: ITable[] = [];
 	export let selecteds: boolean[] = [];
+	let sortedItems: ITable[] = items;
+	$: sortedItems = items.sort(
+		(a, b) => Date.parse(b.CreationDateTime) - Date.parse(a.CreationDateTime)
+	);
 
 	const getStatusColor = (status: string) => {
 		switch (status) {
@@ -110,7 +114,7 @@
 		</thead>
 
 		<tbody class="divide-y divide-slate-300">
-			{#each items as item, i (item)}
+			{#each sortedItems as item, i (item)}
 				<tr
 					class="hover:bg-slate-200 duration-50 ease-in-out transition-colors {selecteds[i]
 						? 'bg-slate-200'

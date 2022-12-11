@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { afterNavigate, beforeNavigate, goto, invalidate } from '$app/navigation';
+	import { invalidate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Button from '$lib/Button.svelte';
 	import Link from '$lib/Link.svelte';
 	import TableAddForm from '$lib/TableAddForm.svelte';
 	import TableList from '$lib/TableList.svelte';
 	import ThreeDotsLoader from '$lib/ThreeDotsLoader.svelte';
-	import { tick } from 'svelte';
 	import { sineInOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
@@ -19,7 +18,7 @@
 	let selecteds: boolean[] = [];
 	$: {
 		const newHash = $page.url.hash;
-		if (hash === '#create-table' && newHash === '#list') {
+		if (hash && hash !== '#list' && newHash === '#list') {
 			setTimeout(() => {
 				refresh();
 			}, 100);
@@ -46,7 +45,7 @@
 <nav class="mt-2">
 	<ul class="flex flex-row gap-x-4">
 		<li>
-			<Link href="#list" type="button" active={hash === '#list'}>List of tables</Link>
+			<Link href="#list" type="button" active={!hash || hash === '#list'}>List of tables</Link>
 		</li>
 		<li>
 			<Link href="#create-table" type="button" active={hash === '#create-table'}>Create table</Link>
@@ -61,7 +60,7 @@
 		>
 			<TableAddForm form={$store.addForm} />
 		</div>
-	{:else}
+	{:else if !hash || hash === '#list'}
 		<div
 			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
 			out:fade={{ duration: 100, easing: sineInOut }}

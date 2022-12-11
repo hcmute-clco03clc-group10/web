@@ -5,7 +5,7 @@ export const load: PageLoad = async ({ fetch, url, depends }) => {
 	depends('/dashboard/table#list');
 	return {
 		tablesRef: new WeakRef(
-			url.href.includes('#create-table')
+			url.href.includes('#') && !url.href.includes('#list')
 				? []
 				: api
 						.use(fetch)
