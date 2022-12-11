@@ -1,7 +1,6 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 export declare interface DatabaseStore {
-	page: 'list' | 'add';
 	addForm: AddForm;
 }
 
@@ -16,14 +15,13 @@ export declare interface AddForm {
 }
 
 export const store = writable<DatabaseStore>({
-	page: 'list', addForm: {
+	addForm: {
 		tableName: '',
 		partitionKey: '',
 		partitionKeyType: '',
 		sortKey: '',
 		sortKeyType: '',
 		provisionedReadCapacity: '5',
-		provisionedWriteCapacity: '5',
+		provisionedWriteCapacity: '5'
 	}
 });
-
