@@ -68,14 +68,14 @@
 	{#if $store.page === 'list'}
 		{#await data.tablesRef.deref()}
 			<div
-				in:fade={{ delay: 100, duration: 100, easing: sineInOut }}
+				in:fade={{ delay: 120, duration: 100, easing: sineInOut }}
 				out:fade={{ duration: 100, easing: sineInOut }}
 			>
 				<ThreeDotsLoader class="w-3 h-3 bg-slate-300" />
 			</div>
 		{:then tables}
 			<div
-				in:fade={{ delay: 100, duration: 100, easing: sineInOut }}
+				in:fade={{ delay: 120, duration: 100, easing: sineInOut }}
 				out:fade={{ duration: 100, easing: sineInOut }}
 			>
 				<TableList items={tables} />
