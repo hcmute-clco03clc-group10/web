@@ -116,7 +116,7 @@
 		<tbody class="divide-y divide-slate-300">
 			{#each sortedItems as item, i (item)}
 				<tr
-					class="hover:bg-slate-200 duration-50 ease-in-out transition-colors {selecteds[i]
+					class="hover:bg-slate-200 ease-in-out duration-[50ms] transition-colors {selecteds[i]
 						? 'bg-slate-200'
 						: ''}"
 				>
