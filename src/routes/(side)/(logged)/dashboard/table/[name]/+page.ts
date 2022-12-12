@@ -9,10 +9,10 @@ export const load: PageLoad = async ({ fetch, params }) => {
 				.get(`/table?name=${params.name}`)
 				.then((v) => {
 					if (v.status === 200) {
-						return v.json();
+						return v.json() as Promise<ITable>;
 					}
 					return undefined;
-				}) as Promise<ITable | undefined>
+				})
 		),
 		tableItemsRef: new WeakRef(
 			api
@@ -20,10 +20,10 @@ export const load: PageLoad = async ({ fetch, params }) => {
 				.get(`/table/items/${params.name}`)
 				.then((v) => {
 					if (v.status === 200) {
-						return v.json();
+						return v.json() as Promise<{ [key: string]: { [key: string]: any } }>;
 					}
 					return undefined;
-				}) as Promise<ITable | undefined>
+				})
 		)
 	};
 };
