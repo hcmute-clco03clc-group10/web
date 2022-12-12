@@ -1,5 +1,5 @@
 <svg
-	class="animate-spin h-8 w-8 {$$props.class}"
+	class="animate-spin {$$props.class}"
 	xmlns="http://www.w3.org/2000/svg"
 	fill="none"
 	viewBox="0 0 24 24"
