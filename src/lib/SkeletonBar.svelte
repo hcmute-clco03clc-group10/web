@@ -5,5 +5,5 @@
 </script>
 
 <div
-	class="animate-pulse animate-shimmer bg-gradient-to-r {from} {via} {to} bg-[length:400%_100%] rounded-lg {$$restProps.class}"
+	class="animate-pulse animate-shimmer bg-gradient-to-r {from} {via} {to} bg-[length:400%_100%] rounded-sm {$$restProps.class}"
 />
