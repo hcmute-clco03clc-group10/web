@@ -9,8 +9,10 @@
 	import { sineInOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
+	import CreateTableItemForm from '$lib/CreateTableItemForm.svelte';
 
 	export let data: PageData;
+	let createItemFormAttributes: any[] = [];
 	let hash: string;
 	let disabledRefresh = false;
 	let selecteds: boolean[] = [];
@@ -131,7 +133,11 @@
 			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
 			out:fade={{ duration: 100, easing: sineInOut }}
 		>
-			#create-item
+			{#await tablePromise then table}
+				{#if table}
+					<CreateTableItemForm {table} attributes={createItemFormAttributes} />
+				{/if}
+			{/await}
 		</div>
 	{:else if hash === '#details'}
 		<div
