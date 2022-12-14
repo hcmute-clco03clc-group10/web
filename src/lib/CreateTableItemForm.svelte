@@ -2,7 +2,7 @@
 	import Input from '$lib/Input.svelte';
 	import SymbolButton from '$lib/SymbolButton.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { quadIn, quadInOut, quadOut, sineIn, sineInOut, sineOut } from 'svelte/easing';
+	import { quadIn, quadInOut, quadOut } from 'svelte/easing';
 	import Spinner from './Spinner.svelte';
 	import { api } from './api';
 	import Button from './Button.svelte';
@@ -16,42 +16,57 @@
 	type Attribute = ITable['AttributeDefinitions'][0] & { AttributeValue: string };
 
 	export let table: ITable;
-	export let attributes: Partial<Attribute>[] = [];
+	export let attributes: Attribute[] = [];
 	let submitting = false;
 	let result: Result;
 
 	async function submit(this: HTMLFormElement, ev: Event) {
 		ev.preventDefault();
 		const data = new FormData(this);
-		const obj: { [key: string]: string } = {};
-		data.forEach((v, k) => {
-			obj[k] = v.toString();
-		});
-		console.log(obj, attributes);
+		const obj: { [key: string]: { [key: string]: any } } = {};
+		for (const attr of table.AttributeDefinitions) {
+			if (data.get(attr.AttributeName)!.toString().length === 0) {
+				continue;
+			}
+			obj[attr.AttributeName] = { [attr.AttributeType]: data.get(attr.AttributeName) };
+		}
+		const removing: string[] = [];
+		for (const { AttributeName, AttributeValue, AttributeType } of attributes) {
+			if (AttributeName && AttributeValue) {
+				removing.push(AttributeName);
+				obj[AttributeName] = { [AttributeType]: AttributeValue };
+				table.AttributeDefinitions.push({
+					AttributeName: AttributeName,
+					AttributeType: AttributeType
+				});
+			}
+		}
+		table.AttributeDefinitions = table.AttributeDefinitions;
+		attributes = attributes.filter(({ AttributeName }) => !removing.includes(AttributeName));
 		submitting = true;
-		// const response = await api
-		// 	.use(fetch)
-		// 	.post(`/table/item/${table.TableName}`, {
-		// 		body: JSON.stringify(obj),
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		}
-		// 	})
-		// 	.finally(() => {
-		// 		submitting = false;
-		// 	});
-		// result = {
-		// 	ok: response.status === 201,
-		// 	text: await response.text()
-		// };
+		const response = await api
+			.use(fetch)
+			.post(`/table/item/${table.TableName}`, {
+				body: JSON.stringify(obj),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			.finally(() => {
+				submitting = false;
+			});
+		result = {
+			ok: response.status === 201,
+			text: await response.text()
+		};
 	}
 
 	const addAttribute = () => {
-		attributes.push({});
+		attributes.push({ AttributeName: '', AttributeType: 'S', AttributeValue: '' });
 		attributes = attributes;
 	};
 
-	const removeAttribute = (attribute: Partial<Attribute>) => {
+	const removeAttribute = (attribute: Attribute) => {
 		const index = attributes.indexOf(attribute);
 		attributes.splice(index, 1);
 		attributes = attributes;
@@ -92,19 +107,12 @@
 	<div class="w-fit rounded-lg overflow-hidden border">
 		<table class="text-left bg-slate-100">
 			<tbody>
-				<tr class="w-fit">
-					<th
-						scope="row"
-						colspan="4"
-						class="whitespace-nowrap w-0 px-4 py-2 divide-y divide-slate-300"
-					/>
-				</tr>
 				{#each table.KeySchema as { AttributeName }}
 					<tr class="w-fit">
 						<th scope="row" class="whitespace-nowrap w-0 px-4 py-2 divide-y divide-slate-300">
-							<label for={AttributeName} class="block font-medium text-slate-600">
+							<label for={AttributeName} class="block text-blue-600 font-bold">
 								{AttributeName}
-								<span class="bg-slate-500 text-slate-50 rounded-sm px-1 text-sm"
+								<span class="bg-blue-600 text-slate-50 rounded-sm px-1 text-sm"
 									>{table.AttributeDefinitions.find((v) => v.AttributeName === AttributeName)
 										?.AttributeType}</span
 								>
@@ -118,6 +126,22 @@
 								required
 								class="w-auto py-1 px-2"
 							/>
+						</td>
+						<td colspan="2" /></tr
+					>
+				{/each}
+				{#each table.AttributeDefinitions.filter((attr) => !table.KeySchema.find(({ AttributeName }) => AttributeName === attr.AttributeName)) as { AttributeName, AttributeType }}
+					<tr class="w-fit">
+						<th scope="row" class="whitespace-nowrap w-0 px-4 py-2 divide-y divide-slate-300">
+							<label for={AttributeName} class="block font-medium text-slate-600">
+								{AttributeName}
+								<span class="bg-slate-500 text-slate-50 rounded-sm px-1 text-sm">
+									{AttributeType}
+								</span>
+							</label>
+						</th>
+						<td class="px-4 py-2">
+							<Input name={AttributeName} type="text" spellcheck="false" class="w-auto py-1 px-2" />
 						</td>
 						<td colspan="2" /></tr
 					>

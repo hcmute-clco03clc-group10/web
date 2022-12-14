@@ -28,8 +28,8 @@
 	};
 </script>
 
-<div class="overflow-hidden overflow-x-auto rounded-lg border table-auto border-slate-300">
-	<table class="min-w-full divide-y divide-slate-300">
+<div class="overflow-hidden overflow-x-auto rounded-lg border border-slate-300">
+	<table class="divide-y divide-slate-300 table-auto min-w-full overflow-x-auto">
 		<thead class="bg-slate-200">
 			<tr>
 				<th class="bg-slate-200 px-4 py-2 text-left">
