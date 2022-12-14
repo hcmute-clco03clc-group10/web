@@ -46,7 +46,7 @@
 		submitting = true;
 		const response = await api
 			.use(fetch)
-			.post(`/table/item/${table.TableName}`, {
+			.post(`/table/${table.TableName}/item`, {
 				body: JSON.stringify(obj),
 				headers: {
 					'Content-Type': 'application/json'
