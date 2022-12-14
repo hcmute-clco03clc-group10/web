@@ -1,7 +1,8 @@
 import { api } from '$lib/api';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, params, depends }) => {
+	depends('dashboard/table/[name]');
 	return {
 		tableRef: new WeakRef(
 			api
@@ -20,7 +21,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
 				.get(`/table/${params.name}/item`)
 				.then((v) => {
 					if (v.status === 200) {
-						return v.json() as Promise<{ [key: string]: { [key: string]: any } }>;
+						return v.json() as Promise<{ [key: string]: any }[]>;
 					}
 					return undefined;
 				})

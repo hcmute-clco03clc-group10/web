@@ -10,13 +10,14 @@
 	import { fade } from 'svelte/transition';
 	import type { PageData } from './$types';
 	import CreateTableItemForm from '$lib/CreateTableItemForm.svelte';
+	import { api } from '$lib/api';
 
 	export let data: PageData;
 	let createItemFormAttributes: any[] = [];
 	let hash: string;
 	let disabledRefresh = false;
+	let deleting = false;
 	let selecteds: boolean[] = [];
-	const tablePromise = data.tableRef.deref();
 	$: {
 		const newHash = $page.url.hash;
 		if (hash && hash !== '#items' && newHash === '#items') {
@@ -28,17 +29,47 @@
 	}
 	const refresh = async () => {
 		disabledRefresh = true;
-		const table = await tablePromise;
-		invalidate((url) => url.pathname.endsWith(`/table/${table?.TableName}/item`))
+		selecteds = [];
+		invalidate('dashboard/table/[name]')
 			.then(() => data.tableItemsRef.deref())
 			.finally(() => {
 				disabledRefresh = false;
 			});
 	};
+	const deleteItems = async () => {
+		const [items, table] = await Promise.all([data.tableItemsRef.deref(), data.tableRef.deref()]);
+		if (!items || !table) {
+			return;
+		}
+		const deletings = items.filter((_, k) => selecteds[k]);
+		if (!deletings) {
+			return;
+		}
+		const keySchema = table.KeySchema;
+		const deleteData = deletings.map((i) => {
+			const data: { [key: string]: any } = {};
+			for (const key of keySchema) {
+				data[key.AttributeName] = i[key.AttributeName];
+			}
+			return data;
+		});
+		deleting = true;
+		const result = await api
+			.use(fetch)
+			.post(`/table/${table.TableName}/item/delete`, {
+				body: JSON.stringify(deleteData)
+			})
+			.finally(() => {
+				deleting = false;
+			});
+		if (result.status === 200) {
+			refresh();
+		}
+	};
 </script>
 
 <svelte:head>
-	{#await tablePromise then table}
+	{#await data.tableRef.deref() then table}
 		{#if table}
 			<title>Cloudbase • {table.TableName}</title>
 		{/if}
@@ -46,7 +77,7 @@
 </svelte:head>
 
 <h1 class="text-2xl font-bold">
-	{#await tablePromise}
+	{#await data.tableRef.deref()}
 		<SkeletonBar via="via-slate-300" class="w-48 h-4 my-3" />
 	{:then table}
 		{#if table}
@@ -97,9 +128,10 @@
 					<li>
 						<Button
 							type="button"
-							disabled={!selecteds.some((v) => v)}
+							disabled={deleting || !selecteds.some((v) => v)}
 							noPadding
 							class="px-1 py-1 rounded-lg"
+							on:click={deleteItems}
 						>
 							<span
 								class="material-symbols-rounded align-middle transition-transform duration-300 group-hover:duration-200 ease-in-out rotate-0 group-hover:rotate-180"
@@ -109,7 +141,7 @@
 					</li>
 				</ul>
 			</nav>
-			{#await Promise.all([tablePromise, data.tableItemsRef.deref()])}
+			{#await Promise.all([data.tableRef.deref(), data.tableItemsRef.deref()])}
 				<div
 					in:fade={{ delay: 120, duration: 100, easing: sineInOut }}
 					out:fade={{ duration: 100, easing: sineInOut }}
@@ -133,7 +165,7 @@
 			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
 			out:fade={{ duration: 100, easing: sineInOut }}
 		>
-			{#await tablePromise then table}
+			{#await data.tableRef.deref() then table}
 				{#if table}
 					<CreateTableItemForm {table} attributes={createItemFormAttributes} />
 				{/if}
