@@ -13,7 +13,6 @@
 	import { api } from '$lib/api';
 
 	export let data: PageData;
-	let createItemFormAttributes: any[] = [];
 	let hash: string;
 	let disabledRefresh = false;
 	let deleting = false;
@@ -167,7 +166,7 @@
 		>
 			{#await data.tableRef.deref() then table}
 				{#if table}
-					<CreateTableItemForm {table} attributes={createItemFormAttributes} />
+					<CreateTableItemForm {table} />
 				{/if}
 			{/await}
 		</div>
