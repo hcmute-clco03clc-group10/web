@@ -29,7 +29,7 @@
 	const refresh = async () => {
 		disabledRefresh = true;
 		const table = await tablePromise;
-		invalidate((url) => url.pathname.endsWith(`/table/items/${table?.TableName}`))
+		invalidate((url) => url.pathname.endsWith(`/table/item/${table?.TableName}`))
 			.then(() => data.tableItemsRef.deref())
 			.finally(() => {
 				disabledRefresh = false;

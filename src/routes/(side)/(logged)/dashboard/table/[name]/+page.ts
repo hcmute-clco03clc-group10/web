@@ -17,7 +17,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
 		tableItemsRef: new WeakRef(
 			api
 				.use(fetch)
-				.get(`/table/items/${params.name}`)
+				.get(`/table/item/${params.name}`)
 				.then((v) => {
 					if (v.status === 200) {
 						return v.json() as Promise<{ [key: string]: { [key: string]: any } }>;
