@@ -7,6 +7,7 @@
 	import { api } from './api';
 	import Button from './Button.svelte';
 	import { flip } from 'svelte/animate';
+	import { invalidate } from '$app/navigation';
 
 	interface Result {
 		ok: boolean;
@@ -16,33 +17,31 @@
 	type Attribute = ITable['AttributeDefinitions'][0] & { AttributeValue: string };
 
 	export let table: ITable;
-	export let attributes: Attribute[] = [];
+	let draftAttributes: Attribute[] = [];
 	let submitting = false;
 	let result: Result;
+	const keyAttributes = table.AttributeDefinitions.filter((attr) =>
+		table.KeySchema.find((key) => key.AttributeName === attr.AttributeName)
+	);
 
 	async function submit(this: HTMLFormElement, ev: Event) {
 		ev.preventDefault();
 		const data = new FormData(this);
 		const obj: { [key: string]: { [key: string]: any } } = {};
 		for (const attr of table.AttributeDefinitions) {
-			if (data.get(attr.AttributeName)!.toString().length === 0) {
+			if (!attr.AttributeName || data.get(attr.AttributeName)!.toString().length === 0) {
 				continue;
 			}
 			obj[attr.AttributeName] = { [attr.AttributeType]: data.get(attr.AttributeName) };
 		}
-		const removing: string[] = [];
-		for (const { AttributeName, AttributeValue, AttributeType } of attributes) {
-			if (AttributeName && AttributeValue) {
-				removing.push(AttributeName);
-				obj[AttributeName] = { [AttributeType]: AttributeValue };
-				table.AttributeDefinitions.push({
-					AttributeName: AttributeName,
-					AttributeType: AttributeType
-				});
+		const newIndexes: number[] = [];
+		draftAttributes.forEach((attr, k) => {
+			if (!attr.AttributeName || !attr.AttributeValue) {
+				return;
 			}
-		}
-		table.AttributeDefinitions = table.AttributeDefinitions;
-		attributes = attributes.filter(({ AttributeName }) => !removing.includes(AttributeName));
+			obj[attr.AttributeName] = { [attr.AttributeType]: attr.AttributeValue };
+			newIndexes.push(k);
+		});
 		submitting = true;
 		const response = await api
 			.use(fetch)
@@ -54,6 +53,14 @@
 			})
 			.finally(() => {
 				submitting = false;
+				for (const index of newIndexes) {
+					table.AttributeDefinitions.push({
+						AttributeName: draftAttributes[index].AttributeName,
+						AttributeType: draftAttributes[index].AttributeType
+					});
+				}
+				table.AttributeDefinitions = table.AttributeDefinitions;
+				draftAttributes = draftAttributes.filter((_, index) => !newIndexes.includes(index));
 			});
 		result = {
 			ok: response.status === 201,
@@ -62,18 +69,22 @@
 	}
 
 	const addAttribute = () => {
-		attributes.push({ AttributeName: '', AttributeType: 'S', AttributeValue: '' });
-		attributes = attributes;
+		draftAttributes.push({
+			AttributeName: '',
+			AttributeType: 'S',
+			AttributeValue: ''
+		});
+		draftAttributes = draftAttributes;
 	};
 
 	const removeAttribute = (attribute: Attribute) => {
-		const index = attributes.indexOf(attribute);
-		attributes.splice(index, 1);
-		attributes = attributes;
+		const index = draftAttributes.indexOf(attribute);
+		draftAttributes.splice(index, 1);
+		draftAttributes = draftAttributes;
 	};
 
 	const removeUnusedAttributes = () => {
-		attributes = attributes.filter((v) => v.AttributeName);
+		draftAttributes = draftAttributes.filter((v) => v.AttributeName);
 	};
 </script>
 
@@ -92,7 +103,7 @@
 				<Button
 					type="button"
 					on:click={removeUnusedAttributes}
-					disabled={!attributes.some((v) => !v.AttributeName)}
+					disabled={!draftAttributes.some((v) => !v.AttributeName)}
 					noPadding
 					class="px-1 py-1 rounded-lg"
 				>
@@ -107,14 +118,13 @@
 	<div class="w-fit rounded-lg overflow-hidden border">
 		<table class="text-left bg-slate-100">
 			<tbody>
-				{#each table.KeySchema as { AttributeName }}
+				{#each keyAttributes as { AttributeName, AttributeType }}
 					<tr class="w-fit">
 						<th scope="row" class="whitespace-nowrap w-0 px-4 py-2 divide-y divide-slate-300">
 							<label for={AttributeName} class="block text-blue-600 font-bold">
 								{AttributeName}
 								<span class="bg-blue-600 text-slate-50 rounded-sm px-1 text-sm"
-									>{table.AttributeDefinitions.find((v) => v.AttributeName === AttributeName)
-										?.AttributeType}</span
+									>{AttributeType}</span
 								>
 							</label>
 						</th>
@@ -130,8 +140,12 @@
 						<td colspan="2" /></tr
 					>
 				{/each}
-				{#each table.AttributeDefinitions.filter((attr) => !table.KeySchema.find(({ AttributeName }) => AttributeName === attr.AttributeName)) as { AttributeName, AttributeType }}
-					<tr class="w-fit">
+				{#each table.AttributeDefinitions.slice(table.KeySchema.length) as { AttributeName, AttributeType }}
+					<tr
+						in:fly={{ x: -10, duration: 150, easing: quadOut }}
+						out:fly={{ x: -10, duration: 70, easing: quadIn }}
+						class="w-fit"
+					>
 						<th scope="row" class="whitespace-nowrap w-0 px-4 py-2 divide-y divide-slate-300">
 							<label for={AttributeName} class="block font-medium text-slate-600">
 								{AttributeName}
@@ -146,10 +160,10 @@
 						<td colspan="2" /></tr
 					>
 				{/each}
-				{#each attributes as attr (attr)}
+				{#each draftAttributes as attr (attr)}
 					<tr
-						in:fly={{ x: -10, duration: 150, easing: quadIn }}
-						out:fly={{ x: -10, duration: 70, easing: quadOut }}
+						in:fly={{ x: -10, duration: 150, easing: quadOut }}
+						out:fly={{ x: -10, duration: 70, easing: quadIn }}
 						animate:flip={{ delay: 50, duration: 200, easing: quadOut }}
 					>
 						<th scope="row" class="px-4 py-2 divide-y divide-slate-300">
