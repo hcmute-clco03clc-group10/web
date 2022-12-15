@@ -19,10 +19,8 @@
 	let selecteds: boolean[] = [];
 	$: {
 		const newHash = $page.url.hash;
-		if (hash && hash !== '#items' && newHash === '#items') {
-			setTimeout(() => {
-				refresh();
-			}, 100);
+		if (hash && hash !== '#view-items' && newHash === '#view-items') {
+			setTimeout(refresh, 1);
 		}
 		hash = newHash;
 	}
@@ -106,7 +104,7 @@
 		<div
 			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
 			out:fade={{ duration: 100, easing: sineInOut }}
-			class="flex flex-col gap-y-2 justify-start border rounded-lg p-2 bg-white"
+			class="flex flex-col gap-y-2 justify-start"
 		>
 			<nav>
 				<ul class="flex gap-x-2 p-1 border rounded-lg w-fit drop-shadow-sm">
@@ -141,16 +139,13 @@
 				</ul>
 			</nav>
 			{#await Promise.all([data.tableRef.deref(), data.tableItemsRef.deref()])}
-				<div
-					in:fade={{ delay: 120, duration: 100, easing: sineInOut }}
-					out:fade={{ duration: 100, easing: sineInOut }}
-				>
+				<div in:fade={{ delay: 100, duration: 100, easing: sineInOut }}>
 					<ThreeDotsLoader class="w-3 h-3 bg-slate-300" />
 				</div>
 			{:then [table, items]}
 				{#if table && items}
 					<div
-						in:fade={{ delay: 120, duration: 100, easing: sineInOut }}
+						in:fade={{ delay: 50, duration: 150, easing: sineInOut }}
 						out:fade={{ duration: 100, easing: sineInOut }}
 					>
 						<TableItems {items} {table} bind:selecteds />
@@ -159,24 +154,21 @@
 			{/await}
 		</div>
 	{:else if hash === '#create-item'}
-		<div
-			class="border rounded-lg p-2 bg-white"
-			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
-			out:fade={{ duration: 100, easing: sineInOut }}
-		>
-			{#await data.tableRef.deref() then table}
-				{#if table}
+		{#await data.tableRef.deref()}
+			<div in:fade={{ delay: 100, duration: 100, easing: sineInOut }}>
+				<ThreeDotsLoader class="w-3 h-3 bg-slate-300" />
+			</div>
+		{:then table}
+			{#if table}
+				<div
+					in:fade={{ delay: 100, duration: 150, easing: sineInOut }}
+					out:fade={{ duration: 100, easing: sineInOut }}
+				>
 					<CreateTableItemForm {table} />
-				{/if}
-			{/await}
-		</div>
+				</div>
+			{/if}
+		{/await}
 	{:else if hash === '#details'}
-		<div
-			class="border rounded-lg p-2 bg-white"
-			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
-			out:fade={{ duration: 100, easing: sineInOut }}
-		>
-			#details
-		</div>
+		#details
 	{/if}
 </section>
