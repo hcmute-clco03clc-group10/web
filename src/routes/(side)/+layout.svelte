@@ -6,7 +6,6 @@
 	import SkeletonBar from '$lib/SkeletonBar.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
-	import { TEMPORARY_REDIRECT } from 'http-status';
 
 	let navigating = false;
 	let promise: Promise<void> | undefined;
