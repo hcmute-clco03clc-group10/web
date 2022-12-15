@@ -2,12 +2,11 @@
 	import Input from '$lib/Input.svelte';
 	import SymbolButton from '$lib/SymbolButton.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { quadIn, quadInOut, quadOut } from 'svelte/easing';
+	import { quadInOut, sineInOut, sineOut } from 'svelte/easing';
 	import Spinner from './Spinner.svelte';
 	import { api } from './api';
 	import Button from './Button.svelte';
 	import { flip } from 'svelte/animate';
-	import { invalidate } from '$app/navigation';
 
 	interface Result {
 		ok: boolean;
@@ -142,8 +141,8 @@
 				{/each}
 				{#each table.AttributeDefinitions.slice(table.KeySchema.length) as { AttributeName, AttributeType }}
 					<tr
-						in:fly={{ x: -10, duration: 150, easing: quadOut }}
-						out:fly={{ x: -10, duration: 70, easing: quadIn }}
+						in:fly|local={{ x: -10, duration: 150, easing: sineOut }}
+						out:fly|local={{ x: -10, duration: 70, easing: sineInOut }}
 						class="w-fit"
 					>
 						<th scope="row" class="whitespace-nowrap w-0 px-4 py-2 divide-y divide-slate-300">
@@ -162,9 +161,9 @@
 				{/each}
 				{#each draftAttributes as attr (attr)}
 					<tr
-						in:fly={{ x: -10, duration: 150, easing: quadOut }}
-						out:fly={{ x: -10, duration: 70, easing: quadIn }}
-						animate:flip={{ delay: 50, duration: 200, easing: quadOut }}
+						in:fly|local={{ x: -10, duration: 150, easing: sineOut }}
+						out:fly|local={{ y: -15, duration: 100, easing: sineInOut }}
+						animate:flip={{ delay: 50, duration: 200, easing: sineOut }}
 					>
 						<th scope="row" class="px-4 py-2 divide-y divide-slate-300">
 							<Input
