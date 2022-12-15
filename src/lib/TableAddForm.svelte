@@ -21,7 +21,7 @@
 		submitting = true;
 		const response = await api
 			.use(fetch)
-			.put('/table', {
+			.post('/table', {
 				body: JSON.stringify(form),
 				headers: {
 					'Content-Type': 'application/json'
