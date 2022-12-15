@@ -3,9 +3,9 @@
 	import SymbolButton from '$lib/SymbolButton.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { quadInOut, sineInOut, sineOut } from 'svelte/easing';
-	import Spinner from './Spinner.svelte';
-	import { api } from './api';
-	import Button from './Button.svelte';
+	import Spinner from '$lib/Spinner.svelte';
+	import { api } from '$lib/api';
+	import Button from '$lib/Button.svelte';
 	import { flip } from 'svelte/animate';
 
 	interface Result {
