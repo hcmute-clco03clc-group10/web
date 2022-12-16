@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Link from '$lib/Link.svelte';
 	import SkeletonBar from '$lib/SkeletonBar.svelte';
@@ -11,7 +12,15 @@
 
 	export let data: PageData;
 	let hash: string;
-	$: hash = $page.url.hash;
+	$: {
+		const newHash = $page.url.hash;
+		if (hash && hash !== '#view-items' && newHash === '#view-items') {
+			setTimeout(() => {
+				invalidate('dashboard/table/[name]');
+			}, 1);
+		}
+		hash = newHash;
+	}
 </script>
 
 <svelte:head>
@@ -33,7 +42,7 @@
 		{/if}
 	{/await}
 </h1>
-<nav class="mt-2">
+<nav class="mt-2 border-b">
 	<ul class="flex flex-row gap-x-4">
 		<li>
 			<Link href="#view-items" type="button" active={!hash || hash === '#view-items'}

@@ -53,9 +53,6 @@
 				disabledRefresh = false;
 			});
 	};
-	onMount(() => {
-		setTimeout(refresh, 1);
-	});
 </script>
 
 <div
