@@ -188,7 +188,7 @@
 			/>
 		</li>
 		<li
-			class="lg:col-span-2 font-medium flex flex-col flex-wrap gap-y-2 gap-x-4 items-start justify-start sm:flex-row sm:items-center"
+			class="lg:col-span-2 font-medium flex flex-col flex-wrap gap-y-2 gap-x-4 items-start justify-start sm:flex-row sm:items-stretch"
 		>
 			<SymbolButton solid bind:hover={submitting} type="submit" symbol="trending_flat">
 				<div slot="symbol">
@@ -206,7 +206,12 @@
 				<span slot="text"> Create </span>
 			</SymbolButton>
 			{#if result}
-				<p class={`break-all ${result.ok ? 'text-green-600' : 'text-red-600'}`}>
+				<p
+					transition:fade|local={{ duration: 300, easing: quadOut }}
+					class={`break-all font-bold rounded text-sm bg-slate-200 px-4 py-2 flex items-center border ${
+						result.ok ? 'text-green-600' : 'text-red-600'
+					}`}
+				>
 					{result.text}
 				</p>
 			{/if}
