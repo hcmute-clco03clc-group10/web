@@ -13,7 +13,11 @@ export const api = {
 	}
 };
 
-const __get = (fetch: typeof window.fetch, path: string, init?: OmittedRequestInit) => {
+const __get = (
+	fetch: typeof window.fetch,
+	path: string,
+	init?: OmittedRequestInit
+): Promise<Response> => {
 	return fetch(
 		endpoint(path),
 		Object.assign(
@@ -26,7 +30,11 @@ const __get = (fetch: typeof window.fetch, path: string, init?: OmittedRequestIn
 	);
 };
 
-const __post = (fetch: typeof window.fetch, path: string, init?: OmittedRequestInit) => {
+const __post = (
+	fetch: typeof window.fetch,
+	path: string,
+	init?: OmittedRequestInit
+): Promise<Response> => {
 	return fetch(
 		endpoint(path),
 		Object.assign(
@@ -39,7 +47,11 @@ const __post = (fetch: typeof window.fetch, path: string, init?: OmittedRequestI
 	);
 };
 
-const __put = (fetch: typeof window.fetch, path: string, init?: OmittedRequestInit) => {
+const __put = (
+	fetch: typeof window.fetch,
+	path: string,
+	init?: OmittedRequestInit
+): Promise<Response> => {
 	return fetch(
 		endpoint(path),
 		Object.assign(
