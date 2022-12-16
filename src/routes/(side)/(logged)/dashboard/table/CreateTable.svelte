@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Input from '$lib/Input.svelte';
 	import SymbolButton from '$lib/SymbolButton.svelte';
-	import { fade } from 'svelte/transition';
-	import { quadInOut } from 'svelte/easing';
-	import Spinner from './Spinner.svelte';
+	import { fade, fly } from 'svelte/transition';
+	import { quadInOut, quadOut } from 'svelte/easing';
+	import Spinner from '$lib/Spinner.svelte';
 	import type { AddForm } from 'src/routes/(side)/(logged)/dashboard/table/store';
-	import { api } from './api';
+	import { api } from '$lib/api';
 
 	interface Result {
 		ok: boolean;
@@ -37,7 +37,12 @@
 	}
 </script>
 
-<form action="#" method="post" on:submit={submit}>
+<form
+	in:fly|local={{ x: -5, duration: 300, easing: quadOut }}
+	action="#"
+	method="post"
+	on:submit={submit}
+>
 	<ul class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 		<li class="flex flex-col gap-y-2 lg:col-span-2">
 			<label for="tableName" class="block text-sm font-medium text-slate-600"> Table name </label>
