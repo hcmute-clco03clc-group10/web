@@ -152,7 +152,7 @@
 					</SymbolButton>
 					{#if result}
 						<p
-							transition:fade={{ duration: 150, easing: quadInOut }}
+							transition:fade|local={{ duration: 150, easing: quadInOut }}
 							class={`break-all ${result.ok ? 'text-green-600' : 'text-red-600'}`}
 						>
 							{result.text}

@@ -45,7 +45,7 @@
 			<div
 				class="absolute t-0 l-0 w-3/4 flex flex-col gap-y-6"
 				in:fade={{ delay: 100, duration: 200, easing: cubicOut }}
-				out:fly={{ x: 10, duration: 100, easing: cubicIn }}
+				out:fly|local={{ x: 10, duration: 100, easing: cubicIn }}
 			>
 				<SkeletonBar via="via-slate-300" class="w-1/2 h-12" />
 				<SkeletonBar via="via-slate-300" class="w-3/4 h-6" />
@@ -66,7 +66,7 @@
 		{:then}
 			<section
 				in:fly={{ x: -10, delay: 100, duration: 200, easing: cubicOut }}
-				out:fade={{ duration: 100, easing: cubicIn }}
+				out:fade|local={{ duration: 100, easing: cubicIn }}
 			>
 				<slot />
 			</section>

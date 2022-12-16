@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
-	import Skeleton from '$lib/Skeleton.svelte';
+	import SkeletonBar from '$lib/SkeletonBar.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { cubicIn, cubicOut } from 'svelte/easing';
+	import { cubicIn, cubicOut, sineIn, sineOut } from 'svelte/easing';
 	import '../../app.css';
 	import Header from '$lib/Header.svelte';
 	import type { PageData } from './$types';
@@ -19,7 +19,7 @@
 			setTimeout(() => {
 				resolve();
 				promise = undefined;
-			}, 350)
+			}, 200)
 		);
 		navigating = true;
 	});
@@ -37,15 +37,23 @@
 	<main class="flex-grow">
 		{#if navigating}
 			<section
-				in:fade={{ delay: 100, duration: 200, easing: cubicOut }}
-				out:fly={{ y: 10, duration: 100, easing: cubicIn }}
+				in:fly={{ y: -7, delay: 100, duration: 150, easing: sineOut }}
+				out:fade|local={{ duration: 100, easing: sineIn }}
+				class="bsolute t-0 l-0 w-3/4 flex flex-col gap-y-6"
 			>
-				<Skeleton />
+				<SkeletonBar via="via-slate-300" class="w-2/3 h-12" />
+				<SkeletonBar via="via-slate-300" class="w-3/4 h-6" />
+				<SkeletonBar via="via-slate-300" class="w-1/3 h-4" />
+				<SkeletonBar via="via-slate-300" class="w-1/4 h-4" />
+				<SkeletonBar via="via-slate-300" class="w-2/5 h-4" />
+				<SkeletonBar via="via-slate-300" class="w-1/4 h-12" />
+				<SkeletonBar via="via-slate-300" class="w-2/5 h-8" />
+				<SkeletonBar via="via-slate-300" class="w-1/2 h-4" />
 			</section>
 		{:else}
 			<section
-				in:fly={{ y: -10, delay: 100, duration: 200, easing: cubicOut }}
-				out:fade={{ duration: 100, easing: cubicIn }}
+				in:fly={{ y: -7, delay: 100, duration: 150, easing: sineOut }}
+				out:fade|local={{ duration: 100, easing: sineIn }}
 			>
 				<slot />
 			</section>

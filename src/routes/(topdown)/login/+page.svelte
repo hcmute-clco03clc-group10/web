@@ -45,7 +45,9 @@
 			text: await response.text()
 		};
 		if (ok) {
-			goto('/dashboard');
+			setTimeout(() => {
+				goto('/dashboard');
+			}, 500);
 		}
 	}
 
@@ -151,7 +153,10 @@
 							<span slot="text"> Login </span>
 						</SymbolButton>
 						{#if result}
-							<p class={`break-all ${result.ok ? 'text-green-600' : 'text-red-600'}`}>
+							<p
+								transition:fade|local={{ duration: 150, easing: quadInOut }}
+								class={`break-all ${result.ok ? 'text-green-600' : 'text-red-600'}`}
+							>
 								{result.text}
 							</p>
 						{/if}
