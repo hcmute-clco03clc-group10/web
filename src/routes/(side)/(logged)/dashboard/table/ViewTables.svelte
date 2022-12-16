@@ -55,7 +55,7 @@
 			.post('/table/delete', { body: JSON.stringify(deletings) })
 			.then(async (v) => {
 				if (v.status === 200) {
-					setMessage('text-red-600', `Đã xóa thành công ${(await v.json()).deletedCount} bảng.`);
+					setMessage('text-green-600', `Đã xóa thành công ${(await v.json()).deletedCount} bảng.`);
 				} else {
 					setMessage('text-red-600', await v.text());
 				}
