@@ -2,7 +2,7 @@
 	import '../../app.css';
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import SideBar from '$lib/SideBar.svelte';
+	import SideBar from './SideBar.svelte';
 	import SkeletonBar from '$lib/SkeletonBar.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-	import Link from './Link.svelte';
+	import Link from '$lib/Link.svelte';
 	import SideBarItem from './SideBarItem.svelte';
-	import SkeletonBar from './SkeletonBar.svelte';
-	import SymbolLink from './SymbolLink.svelte';
+	import SkeletonBar from '$lib/SkeletonBar.svelte';
+	import SymbolLink from '$lib/SymbolLink.svelte';
 
 	export let items: ISideBarItem[];
 	export let user: Promise<IUser>;

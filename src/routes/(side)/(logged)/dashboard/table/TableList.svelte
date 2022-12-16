@@ -1,7 +1,7 @@
 <script lang="ts">
-	import CheckboxInput from './CheckboxInput.svelte';
-	import Input from './Input.svelte';
-	import Link from './Link.svelte';
+	import CheckboxInput from '$lib/CheckboxInput.svelte';
+	import Input from '$lib/Input.svelte';
+	import Link from '$lib/Link.svelte';
 
 	export let items: ITable[] = [];
 	export let selecteds: boolean[] = [];

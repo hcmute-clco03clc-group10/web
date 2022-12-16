@@ -3,7 +3,7 @@
 	import { quadOut, sineOut } from 'svelte/easing';
 	import { invalidate } from '$app/navigation';
 	import type { PageData } from './$types';
-	import TableList from '$lib/TableList.svelte';
+	import TableList from './TableList.svelte';
 	import Button from '$lib/Button.svelte';
 	import ThreeDotsLoader from '$lib/ThreeDotsLoader.svelte';
 	import { api } from '$lib/api';
