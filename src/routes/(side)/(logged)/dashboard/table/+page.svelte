@@ -18,7 +18,7 @@
 	let selecteds: boolean[] = [];
 	$: {
 		const newHash = $page.url.hash;
-		if (hash && hash !== '#list' && newHash === '#list') {
+		if (hash && hash !== '#view-tables' && newHash === '#view-tables') {
 			setTimeout(() => {
 				refresh();
 			}, 100);
@@ -29,7 +29,7 @@
 
 	const refresh = () => {
 		disabledRefresh = true;
-		invalidate('/dashboard/table#list')
+		invalidate('/dashboard/table#view-tables')
 			.then(() => data.tablesRef.deref()!)
 			.finally(() => {
 				disabledRefresh = false;
@@ -45,7 +45,7 @@
 <nav class="mt-2">
 	<ul class="flex flex-row gap-x-4">
 		<li>
-			<Link href="#list" type="button" active={!hash || hash === '#list'}>List of tables</Link>
+			<Link href="#view-tables" type="button" active={!hash || hash === '#view-tables'}>View tables</Link>
 		</li>
 		<li>
 			<Link href="#create-table" type="button" active={hash === '#create-table'}>Create table</Link>
@@ -61,7 +61,7 @@
 		>
 			<TableAddForm form={$store.addForm} />
 		</div>
-	{:else if !hash || hash === '#list'}
+	{:else if !hash || hash === '#view-tables'}
 		<div
 			in:fade={{ delay: 100, duration: 200, easing: sineInOut }}
 			out:fade={{ duration: 100, easing: sineInOut }}
