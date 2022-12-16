@@ -1,10 +1,12 @@
 <script lang="ts">
 	import CheckboxInput from '$lib/CheckboxInput.svelte';
 	import Input from '$lib/Input.svelte';
+	import Link from '$lib/Link.svelte';
 
 	export let items: { [key: string]: { [key: string]: any } }[] = [];
 	export let selecteds: boolean[] = [];
 	export let table: ITable;
+	const hasSortKey = table.KeySchema.length === 2;
 	let attributeDefinitions: ITable['AttributeDefinitions'];
 	$: {
 		const set = new Set<string>(table.AttributeDefinitions.map((v) => v.AttributeName));
@@ -52,6 +54,8 @@
 
 		<tbody class="divide-y divide-slate-300">
 			{#each items as item, i (item)}
+				{@const pk = attributeDefinitions[0]}
+				{@const sk = attributeDefinitions[1]}
 				<tr
 					class="hover:bg-slate-200 duration-[50ms] ease-in-out transition-colors {selecteds[i]
 						? 'bg-slate-200'
@@ -65,7 +69,21 @@
 							class="px-0 py-0 lg:px-3 lg:py-2 xl:px-5 xl:py-3 checked:text-blue-600"
 						/>
 					</td>
-					{#each attributeDefinitions as { AttributeName, AttributeType }}
+					<td class="whitespace-nowrap px-4 py-2">
+						<Link
+							href="item/{item[pk.AttributeName][pk.AttributeType]}{hasSortKey
+								? `/${item[sk.AttributeName][sk.AttributeType]}`
+								: ''}"
+						>
+							{#if item[pk.AttributeName]}
+								{item[pk.AttributeName][pk.AttributeType]}
+							{:else}
+								<span class="sr-only">Undefined</span>
+								<div class="w-full bg-slate-500 max-w-[1em] h-1.5" />
+							{/if}
+						</Link>
+					</td>
+					{#each attributeDefinitions.slice(1) as { AttributeName, AttributeType }}
 						<td class="whitespace-nowrap px-4 py-2">
 							{#if item[AttributeName]}
 								{item[AttributeName][AttributeType]}
