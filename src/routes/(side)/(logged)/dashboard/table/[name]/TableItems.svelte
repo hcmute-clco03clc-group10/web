@@ -31,10 +31,10 @@
 </script>
 
 <div class="overflow-hidden overflow-x-auto rounded-lg border border-slate-300">
-	<table class="divide-y divide-slate-300 table-auto min-w-full overflow-x-auto">
+	<table class="divide-y divide-slate-300 table-auto w-full overflow-x-auto">
 		<thead class="bg-slate-200">
 			<tr>
-				<th class="bg-slate-200 px-4 py-2 text-left">
+				<th class="bg-slate-200 px-4 py-2 text-left whitespace-nowrap w-0">
 					<label class="sr-only" for="SelectAll">Select All</label>
 					<Input
 						type="checkbox"
@@ -61,7 +61,7 @@
 						? 'bg-slate-200'
 						: ''}"
 				>
-					<td class="px-4 py-2">
+					<td class="px-4 py-2 whitespace-nowrap w-0">
 						<label class="sr-only" for="Row1">Row {i + 1}</label>
 						<CheckboxInput
 							bind:checked={selecteds[i]}
