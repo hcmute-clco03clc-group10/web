@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TableItems from '$lib/TableItems.svelte';
+	import TableItems from './TableItems.svelte';
 	import Button from '$lib/Button.svelte';
 	import { api } from '$lib/api';
 	import type { PageData } from './$types';
@@ -7,7 +7,6 @@
 	import ThreeDotsLoader from '$lib/ThreeDotsLoader.svelte';
 	import { fade } from 'svelte/transition';
 	import { invalidate } from '$app/navigation';
-	import { onMount } from 'svelte';
 
 	export let data: PageData;
 	let selecteds: boolean[] = [];

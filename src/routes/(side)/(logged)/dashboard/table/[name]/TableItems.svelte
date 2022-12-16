@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CheckboxInput from './CheckboxInput.svelte';
-	import Input from './Input.svelte';
+	import CheckboxInput from '$lib/CheckboxInput.svelte';
+	import Input from '$lib/Input.svelte';
 
 	export let items: { [key: string]: { [key: string]: any } }[] = [];
 	export let selecteds: boolean[] = [];
