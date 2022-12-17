@@ -46,10 +46,14 @@
 		submitting = true;
 		const data: { [key: string]: { [key: string]: any } } = {};
 		const pk = attributes.find((attr) => attr.AttributeName === table.KeySchema[0].AttributeName)!;
-		const sk = attributes.find((attr) => attr.AttributeName === table.KeySchema[1].AttributeName)!;
-		const shouldDelete =
-			pk.AttributeValue !== item[pk.AttributeName][pk.AttributeType] ||
-			sk.AttributeValue !== item[sk.AttributeName][sk.AttributeType];
+		const sk =
+			table.KeySchema.length === 2
+				? attributes.find((attr) => attr.AttributeName === table.KeySchema[1].AttributeName)!
+				: undefined;
+		let shouldDelete = pk.AttributeValue !== item[pk.AttributeName][pk.AttributeType];
+		if (sk) {
+			shouldDelete ||= sk.AttributeValue !== item[sk.AttributeName][sk.AttributeType];
+		}
 		for (const attr of attributes) {
 			if (attr.Removing) {
 				continue;
@@ -64,14 +68,15 @@
 			data[attr.AttributeName] = { [attr.AttributeType]: attr.AttributeValue };
 		}
 		if (shouldDelete) {
+			const deleteData = {
+				[pk.AttributeName]: item[pk.AttributeName]
+			};
+			if (sk) {
+				deleteData[sk.AttributeName] = item[sk.AttributeName];
+			}
 			const results = await Promise.all([
 				api.use(fetch).post(`/table/${table.TableName}/item/delete`, {
-					body: JSON.stringify([
-						{
-							[pk.AttributeName]: item[pk.AttributeName],
-							[sk.AttributeName]: item[sk.AttributeName]
-						}
-					])
+					body: JSON.stringify([deleteData])
 				}),
 				api.use(fetch).post(`/table/${table.TableName}/item`, {
 					body: JSON.stringify(data)

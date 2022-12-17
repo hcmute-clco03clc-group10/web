@@ -173,16 +173,16 @@
 					<td class="whitespace-nowrap px-4 py-2 text-slate-700">
 						{#if item.KeySchema.length === 2}
 							{item.KeySchema[1].AttributeName}
+							<span
+								class="text-xs font-medium px-1.5 py-1 rounded-lg bg-slate-300 text-slate-700 border border-slate-400 ml-2 hidden lg:inline"
+							>
+								{getAttributeTypeSymbol(
+									item.AttributeDefinitions.find(
+										(v) => v.AttributeName === item.KeySchema[1].AttributeName
+									).AttributeType
+								)}
+							</span>
 						{/if}
-						<span
-							class="text-xs font-medium px-1.5 py-1 rounded-lg bg-slate-300 text-slate-700 border border-slate-400 ml-2 hidden lg:inline"
-						>
-							{getAttributeTypeSymbol(
-								item.AttributeDefinitions.find(
-									(v) => v.AttributeName === item.KeySchema[1].AttributeName
-								).AttributeType
-							)}
-						</span>
 					</td>
 					<td class="whitespace-nowrap px-4 py-2 text-slate-700 hidden lg:table-cell">
 						{item.ItemCount}

@@ -77,6 +77,7 @@
 					<input
 						bind:group={form.partitionKeyType}
 						type="radio"
+						required
 						id="pk-typeB"
 						name="partitionKeyType"
 						value="B"
@@ -88,6 +89,7 @@
 					<input
 						bind:group={form.partitionKeyType}
 						type="radio"
+						required
 						id="pk-typeN"
 						name="partitionKeyType"
 						value="N"
@@ -99,6 +101,7 @@
 					<input
 						bind:group={form.partitionKeyType}
 						type="radio"
+						required
 						id="pk-typeS"
 						name="partitionKeyType"
 						value="S"
@@ -118,7 +121,6 @@
 				type="text"
 				spellcheck="none"
 				placeholder="Enter sort key..."
-				required
 			/>
 			<fieldset class="flex flex-col items-start sm:flex-row sm:items-center gap-y-4 gap-x-6 pt-2">
 				<legend class="text-slate-600 font-medium text-sm">Sort key type</legend>
