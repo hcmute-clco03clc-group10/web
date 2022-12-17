@@ -10,7 +10,9 @@
 	let attributeDefinitions: ITable['AttributeDefinitions'];
 	$: {
 		const set = new Set<string>(table.AttributeDefinitions.map((v) => v.AttributeName));
-		attributeDefinitions = table.AttributeDefinitions;
+		attributeDefinitions = table.KeySchema.map(
+			(k) => table.AttributeDefinitions.find((attr) => attr.AttributeName === k.AttributeName)!
+		);
 
 		for (const item of items) {
 			for (const key of Object.keys(item)) {
@@ -71,7 +73,7 @@
 					</td>
 					<td class="whitespace-nowrap px-4 py-2">
 						<Link
-							href="item/{item[pk.AttributeName][pk.AttributeType]}{hasSortKey
+							href="{table.TableName}/item/{item[pk.AttributeName][pk.AttributeType]}{hasSortKey
 								? `/${item[sk.AttributeName][sk.AttributeType]}`
 								: ''}"
 						>
