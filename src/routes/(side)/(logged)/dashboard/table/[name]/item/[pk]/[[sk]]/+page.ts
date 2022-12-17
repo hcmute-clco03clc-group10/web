@@ -1,6 +1,8 @@
 import { api } from '$lib/api';
 import type { PageLoad } from './$types';
 
+export const prerender = 'auto';
+
 export const load: PageLoad = async ({ fetch, params }) => {
 	const tablePromise = api
 		.use(fetch)
