@@ -2,23 +2,19 @@
 	import Input from '$lib/Input.svelte';
 	import SymbolButton from '$lib/SymbolButton.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { quadInOut, sineInOut, sineOut } from 'svelte/easing';
+	import { quadInOut, quadOut, sineInOut, sineOut } from 'svelte/easing';
 	import Spinner from '$lib/Spinner.svelte';
 	import { api } from '$lib/api';
 	import Button from '$lib/Button.svelte';
 	import { flip } from 'svelte/animate';
-
-	interface Result {
-		ok: boolean;
-		text: string;
-	}
+	import Badge from '$lib/Badge.svelte';
 
 	type Attribute = ITable['AttributeDefinitions'][0] & { AttributeValue: string };
 
 	export let table: ITable;
 	let draftAttributes: Attribute[] = [];
 	let submitting = false;
-	let result: Result;
+	let message = { color: '', text: '' };
 	const keyAttributes = table.AttributeDefinitions.filter((attr) =>
 		table.KeySchema.find((key) => key.AttributeName === attr.AttributeName)
 	);
@@ -61,10 +57,13 @@
 				table.AttributeDefinitions = table.AttributeDefinitions;
 				draftAttributes = draftAttributes.filter((_, index) => !newIndexes.includes(index));
 			});
-		result = {
-			ok: response.status === 201,
-			text: await response.text()
-		};
+		if (response.status === 200) {
+			message.color = 'text-green-600';
+			message.text = 'Tạo item thành công.';
+		} else {
+			message.color = 'text-red-600';
+			message.text = await response.text();
+		}
 	}
 
 	const addAttribute = () => {
@@ -215,24 +214,28 @@
 			</tbody>
 		</table>
 	</div>
-	<SymbolButton solid bind:hover={submitting} type="submit">
-		<div slot="symbol">
-			{#if submitting}
-				<div in:fade={{ duration: 150, easing: quadInOut }}>
-					<Spinner class="h-5 w-5 text-slate-50" />
-				</div>
-			{:else}
-				<span
-					in:fade={{ duration: 150, easing: quadInOut }}
-					class="material-symbols-rounded align-middle">trending_flat</span
-				>
-			{/if}
-		</div>
-		<span slot="text"> Create </span>
-	</SymbolButton>
-	{#if result}
-		<p class={`break-all ${result.ok ? 'text-green-600' : 'text-red-600'}`}>
-			{result.text}
-		</p>
-	{/if}
+	<div class="flex flex-col sm:flex-row sm:items-stretch gap-x-4 gap-y-2">
+		<SymbolButton solid bind:hover={submitting} type="submit">
+			<div slot="symbol">
+				{#if submitting}
+					<div in:fade={{ duration: 150, easing: quadInOut }}>
+						<Spinner class="h-5 w-5 text-slate-50" />
+					</div>
+				{:else}
+					<span
+						in:fade={{ duration: 150, easing: quadInOut }}
+						class="material-symbols-rounded align-middle">trending_flat</span
+					>
+				{/if}
+			</div>
+			<span slot="text"> Create </span>
+		</SymbolButton>
+		{#if message.text}
+			<div transition:fade|local={{ duration: 300, easing: quadOut }} class="flex">
+				<Badge class={message.color}>
+					{message.text}
+				</Badge>
+			</div>
+		{/if}
+	</div>
 </form>
