@@ -48,7 +48,7 @@
 			</div>
 			<nav class="hidden space-x-10 md:flex">
 				<a href="/" class="text-base font-medium text-slate-500 hover:text-slate-900">Pricing</a>
-				<a href="/" class="text-base font-medium text-slate-500 hover:text-slate-900">Docs</a>
+				<a href="/docs" class="text-base font-medium text-slate-500 hover:text-slate-900">Docs</a>
 
 				<div class="relative">
 					<!-- Item active: "text-slate-900", Item inactive: "text-slate-500" -->
