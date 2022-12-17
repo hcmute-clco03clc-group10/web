@@ -8,7 +8,8 @@ export const api = {
 		return {
 			get: __get.bind(this, fetch),
 			post: __post.bind(this, fetch),
-			put: __put.bind(this, fetch)
+			put: __put.bind(this, fetch),
+			delete: __delete.bind(this, fetch)
 		};
 	}
 };
@@ -57,6 +58,23 @@ const __put = (
 		Object.assign(
 			{
 				method: 'put',
+				credentials: 'include'
+			},
+			init
+		) as RequestInit
+	);
+};
+
+const __delete = (
+	fetch: typeof window.fetch,
+	path: string,
+	init?: OmittedRequestInit
+): Promise<Response> => {
+	return fetch(
+		endpoint(path),
+		Object.assign(
+			{
+				method: 'delete',
 				credentials: 'include'
 			},
 			init
