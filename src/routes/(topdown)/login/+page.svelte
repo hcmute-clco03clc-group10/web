@@ -42,7 +42,7 @@
 		const ok = response.status === 200;
 		result = {
 			ok,
-			text: await response.text()
+			text: ok ? 'Logged in successfully.' : await response.text()
 		};
 		if (ok) {
 			setTimeout(() => {
