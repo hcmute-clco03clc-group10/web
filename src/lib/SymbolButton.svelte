@@ -6,7 +6,9 @@
 
 <button
 	{...$$restProps}
-	class={`group relative flex items-center overflow-hidden rounded ${!noPadding ? 'px-8 py-3' : ''} transition transform duration-200 ease-in-out focus:outline-none focus:border-transparent border focus:ring focus:ring-blue-600/60 ` +
+	class={`group relative flex items-center overflow-hidden rounded ${
+		!noPadding ? 'px-8 py-3' : ''
+	} transition transform duration-200 ease-in-out focus:outline-none focus:border-transparent border focus:ring focus:ring-blue-600/60 ` +
 		(solid ? 'bg-blue-600 text-slate-100 border-blue-700 ' : 'border-blue-600 text-blue-600 ') +
 		($$restProps.class || '')}
 >
