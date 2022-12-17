@@ -188,13 +188,13 @@
 								<option value="S">String</option>
 								<option value="N">Number</option>
 								<option value="BOOL">Boolean</option>
-								<option value="B">Binary</option>
-								<option value="NULL">Null</option>
-								<option value="SS">String set</option>
-								<option value="NS">Number set</option>
-								<option value="BS">Binary set</option>
-								<option value="L">List</option>
-								<option value="M">Map</option>
+								<option value="B" disabled class="disabled:text-slate-300">Binary</option>
+								<option value="NULL" disabled class="disabled:text-slate-300">Null</option>
+								<option value="SS" disabled class="disabled:text-slate-300">String set</option>
+								<option value="NS" disabled class="disabled:text-slate-300">Number set</option>
+								<option value="BS" disabled class="disabled:text-slate-300">Binary set</option>
+								<option value="L" disabled class="disabled:text-slate-300">List</option>
+								<option value="M" disabled class="disabled:text-slate-300">Map</option>
 							</select>
 						</td>
 						<td class="px-4 py-2">
